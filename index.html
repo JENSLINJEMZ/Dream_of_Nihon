@@ -1,632 +1,1790 @@
+I'll create a stunning, modern Japanese learning platform with cutting-edge UI design, advanced animations, and beautiful aesthetics. Here's a completely redesigned version with premium features:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>夢の日本 · Dream of Nihon</title>
-  <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js (lightweight) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <title>Nihon Dreams - Master Japanese Beautifully</title>
+  
+  <!-- Advanced Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@9/swiper-bundle.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
   <style>
-    /* ----- MODERN JAPAN RED & WHITE ----- */
+    /* ==================== PREMIUM VARIABLES ==================== */
+    :root {
+      /* Modern Japanese Palette */
+      --primary: #FF3366;
+      --primary-dark: #E61E4D;
+      --primary-light: #FF5A8D;
+      --secondary: #000000;
+      --accent: #FFD700;
+      --success: #00D9A5;
+      --warning: #FFB800;
+      --danger: #FF4458;
+      
+      /* Sophisticated Grays */
+      --gray-100: #FAFAFA;
+      --gray-200: #F5F5F7;
+      --gray-300: #E8E8ED;
+      --gray-400: #D2D2D7;
+      --gray-500: #8E8E93;
+      --gray-600: #636366;
+      --gray-700: #48484A;
+      --gray-800: #2C2C2E;
+      --gray-900: #1C1C1E;
+      
+      /* Glassmorphism */
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      
+      /* Premium Shadows */
+      --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+      --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+      --shadow-2xl: 0 35px 60px rgba(0, 0, 0, 0.3);
+      --shadow-glow: 0 0 50px rgba(255, 51, 102, 0.3);
+      
+      /* Smooth Animations */
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+      --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+      --spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* ==================== RESET & BASE ==================== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
     body {
-      background: #fcfaf9;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #1e1b1a;
-      line-height: 1.5;
-      opacity: 0;
-      animation: appear 0.6s ease forwards;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #000000;
+      color: var(--gray-100);
+      overflow-x: hidden;
+      position: relative;
     }
 
-    @keyframes appear { to { opacity: 1; } }
-
-    /* === RED FLAG ACCENTS === */
-    :root {
-      --japan-red: #b22222;  /* deeper, elegant red */
-      --japan-red-light: #fae6e6;
-      --paper-white: #ffffff;
-      --charcoal: #2a2523;
+    ::selection {
+      background: var(--primary);
+      color: white;
     }
 
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
 
-    /* --- navbar --- */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 2.5rem;
-      background: var(--paper-white);
-      border-bottom: 2px solid var(--japan-red);
-      box-shadow: 0 8px 24px -12px rgba(178, 34, 34, 0.15);
-      position: sticky;
+    ::-webkit-scrollbar-track {
+      background: var(--gray-900);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 100px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+
+    /* ==================== ANIMATED BACKGROUND ==================== */
+    .animated-bg {
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(180deg, #000000 0%, #0A0A0A 100%);
+    }
+
+    .gradient-orbs {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+    }
+
+    .orb1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+      animation: float1 20s infinite ease-in-out;
+    }
+
+    .orb2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      bottom: -150px;
+      right: -150px;
+      animation: float2 15s infinite ease-in-out;
+    }
+
+    .orb3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--success) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float3 25s infinite ease-in-out;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(100px, 50px) scale(1.1); }
+      66% { transform: translate(-50px, 100px) scale(0.9); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-100px, -50px) scale(0.9); }
+      66% { transform: translate(50px, -100px) scale(1.1); }
+    }
+
+    @keyframes float3 {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      33% { transform: translate(-45%, -55%) scale(1.2); }
+      66% { transform: translate(-55%, -45%) scale(0.8); }
+    }
+
+    /* ==================== PREMIUM NAVIGATION ==================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .nav.scrolled {
+      padding: 0.8rem 2rem;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo {
-      font-size: 1.9rem;
-      font-weight: 500;
-      color: var(--japan-red);
       display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-decoration: none;
+      color: white;
+      position: relative;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transform: rotate(-5deg);
+      transition: transform 0.3s var(--spring);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .logo:hover .logo-icon {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .logo-main {
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, white 0%, var(--gray-300) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      color: var(--gray-500);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-item {
+      position: relative;
+      padding: 0.6rem 1.2rem;
+      color: var(--gray-300);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      border-radius: 12px;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      transform: translateX(-50%);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+
+    .nav-item:hover {
+      color: white;
+      background: var(--glass);
+    }
+
+    .nav-item:hover::after {
+      width: 80%;
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    /* ==================== PREMIUM BUTTONS ==================== */
+    .btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      letter-spacing: -0.5px;
-    }
-
-    .logo i {
-      font-size: 2rem;
-      color: var(--japan-red);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--charcoal);
-      font-weight: 500;
-      font-size: 1.05rem;
-      transition: 0.2s;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 4px;
-    }
-
-    .nav-links a:hover {
-      border-bottom-color: var(--japan-red);
-      color: var(--japan-red);
-    }
-
-    .btn {
-      padding: 0.6rem 1.8rem;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-      border: 1.5px solid transparent;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .btn-primary {
-      background: var(--japan-red);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
-      box-shadow: 0 6px 14px rgba(178, 34, 34, 0.25);
+      box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
     }
 
     .btn-primary:hover {
-      background: #8b1a1a;
       transform: translateY(-2px);
-      box-shadow: 0 12px 20px rgba(150, 20, 20, 0.25);
+      box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
     }
 
-    .btn-outline {
-      border-color: var(--japan-red);
-      color: var(--japan-red);
-      background: transparent;
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
     }
 
-    .btn-outline:hover {
-      background: var(--japan-red-light);
-      transform: scale(1.02);
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
-    /* --- hero --- */
+    .btn-glass {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      color: white;
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* ==================== HERO SECTION ==================== */
     .hero {
+      min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      padding: 120px 2rem 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 4rem;
-      padding: 5rem 0 3rem;
-      flex-wrap: wrap;
+      align-items: center;
     }
 
-    .hero-text {
-      flex: 1 1 380px;
-      animation: slideUp 0.8s ease;
+    .hero-content {
+      z-index: 2;
     }
 
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(25px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-badge {
-      background: var(--japan-red-light);
-      color: var(--japan-red);
-      padding: 0.4rem 1.4rem;
-      border-radius: 40px;
-      display: inline-block;
-      font-size: 0.9rem;
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      color: var(--primary);
+      font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 1.5rem;
-      border: 1px solid #f3c3c3;
+      backdrop-filter: blur(10px);
+      animation: glow 2s ease-in-out infinite;
     }
 
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 550;
-      line-height: 1.1;
-      color: #1e1613;
-      margin-bottom: 1.2rem;
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 51, 102, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(255, 51, 102, 0.5); }
     }
 
-    .hero h1 span {
-      color: var(--japan-red);
-      position: relative;
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title-gradient {
+      background: linear-gradient(135deg, white 0%, var(--gray-400) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title-accent {
+      color: var(--primary);
       display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
     }
 
-    .hero h1 span::after {
-      content: "●";
-      font-size: 1.8rem;
-      color: var(--japan-red);
-      position: absolute;
-      top: -12px;
-      right: -28px;
-      opacity: 0.4;
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
-    .hero p {
-      font-size: 1.25rem;
-      color: #4e413b;
-      max-width: 520px;
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: var(--gray-400);
       margin-bottom: 2.5rem;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .hero-subtitle .typed {
+      color: var(--primary);
+      font-weight: 600;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 1.2rem;
+      gap: 1rem;
       flex-wrap: wrap;
+      margin-bottom: 3rem;
     }
 
-    .hero-image {
-      flex: 1 1 320px;
-      background: url('image.png') no-repeat center/contain;
-      min-height: 300px;
-      animation: float 7s infinite ease-in-out;
-      filter: drop-shadow(0 8px 18px rgba(178,34,34,0.1));
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      45% { transform: translateY(-12px); }
-      100% { transform: translateY(0); }
-    }
-
-    /* section titles */
-    .section-title {
-      font-size: 2.5rem;
-      text-align: center;
-      margin: 5rem 0 2rem;
-      color: #201916;
-      font-weight: 500;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 70px;
-      height: 3px;
-      background: var(--japan-red);
-      margin: 0.8rem auto 0;
-      border-radius: 2px;
-    }
-
-    /* feature cards - clean minimal */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      margin: 2.5rem 0;
-    }
-
-    .feature-card {
-      background: white;
-      border-radius: 32px;
-      padding: 2.5rem 1.5rem;
-      box-shadow: 0 20px 32px -16px rgba(100, 40, 40, 0.12);
-      border: 1px solid #ffe7e7;
-      transition: all 0.25s;
-      text-align: center;
-    }
-
-    .feature-card:hover {
-      border-color: var(--japan-red);
-      transform: translateY(-6px);
-      box-shadow: 0 28px 40px -20px #b22222;
-    }
-
-    .feature-icon {
-      font-size: 2.8rem;
-      color: var(--japan-red);
-      margin-bottom: 1.3rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1.7rem;
-      font-weight: 500;
-      margin-bottom: 0.6rem;
-      color: #251e1a;
-    }
-
-    .jp-tag {
-      font-size: 0.9rem;
-      color: var(--japan-red);
-      font-weight: 500;
-      margin-top: 0.6rem;
-      letter-spacing: 0.3px;
-    }
-
-    /* lesson cards - modern */
-    .lesson-grid {
+    .hero-stats {
       display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-      margin: 3rem 0 4rem;
+      gap: 3rem;
     }
 
-    .lesson-card {
-      background: white;
-      border-radius: 32px;
-      padding: 1.8rem 1.8rem 2rem;
-      width: 200px;
-      box-shadow: 0 16px 28px -16px rgba(120, 40, 40, 0.2);
-      border: 1.5px solid #fcd7d7;
-      transition: 0.2s;
-      cursor: pointer;
-      text-align: center;
+    .stat {
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
     }
 
-    .lesson-card:hover {
-      border-color: var(--japan-red);
-      transform: scale(1.02) rotate(0.3deg);
-      box-shadow: 0 22px 34px -14px #b22222;
-    }
+    .stat:nth-child(1) { animation-delay: 0.1s; }
+    .stat:nth-child(2) { animation-delay: 0.2s; }
+    .stat:nth-child(3) { animation-delay: 0.3s; }
 
-    .kanji-large {
-      font-size: 4rem;
-      font-weight: 450;
-      color: var(--japan-red);
-      line-height: 1.2;
-    }
-
-    .lesson-label {
-      font-size: 1.3rem;
-      font-weight: 500;
-      margin: 0.5rem 0 0.2rem;
-      color: #221c18;
-    }
-
-    .jp-small {
-      color: var(--japan-red);
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    /* progress panel - crisp */
-    .analytics-panel {
-      display: flex;
-      gap: 2rem;
-      background: white;
-      border-radius: 48px;
-      padding: 2.5rem;
-      margin: 3rem 0;
-      flex-wrap: wrap;
-      border: 2px solid #fcd7d7;
-      box-shadow: 0 26px 40px -28px #b22222;
-    }
-
-    .chart-box {
-      flex: 1 1 260px;
-      max-width: 300px;
-    }
-
-    canvas {
-      background: #fff8f8;
-      border-radius: 32px;
-      padding: 8px;
-    }
-
-    .stats-area {
-      flex: 2 1 280px;
-    }
-
-    .stat-blocks {
-      display: flex;
-      gap: 1.2rem;
-      margin: 1.2rem 0;
-      flex-wrap: wrap;
-    }
-
-    .stat-block {
-      background: #fef4f4;
-      border-radius: 28px;
-      padding: 1.2rem 1.8rem;
-      border: 1px solid var(--japan-red);
-      box-shadow: 0 6px 12px #fad2d2;
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
     }
 
     .stat-number {
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: var(--japan-red);
-    }
-
-    /* cta big red */
-    .cta-section {
-      background: var(--japan-red);
-      border-radius: 48px;
-      padding: 3.5rem 2.5rem;
-      text-align: center;
+      font-size: 2rem;
+      font-weight: 900;
       color: white;
-      margin: 5rem 0;
-      box-shadow: 0 30px 40px -20px #8b1a1a;
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
     }
 
-    .cta-section h2 {
-      font-size: 3rem;
-      font-weight: 500;
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* 3D Card */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .card-3d {
+      width: 100%;
+      max-width: 500px;
+      height: 600px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate3d 20s linear infinite;
+    }
+
+    @keyframes rotate3d {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--glass) 0%, rgba(255, 51, 102, 0.1) 100%);
+      border: 2px solid var(--glass-border);
+      border-radius: 30px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      color: var(--primary);
+      box-shadow: var(--shadow-2xl);
+      backface-visibility: hidden;
+    }
+
+    .card-face.back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, var(--glass) 100%);
+      color: var(--accent);
+    }
+
+    /* ==================== FEATURE GRID ==================== */
+    .features {
+      padding: 100px 2rem;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       margin-bottom: 1rem;
     }
 
-    .cta-section .btn-primary {
-      background: white;
-      color: var(--japan-red);
-      border: none;
-      font-size: 1.3rem;
-      padding: 1rem 3rem;
-      margin-top: 1.5rem;
-      box-shadow: 0 10px 16px rgba(0,0,0,0.1);
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      font-family: 'Bebas Neue', sans-serif;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, white 0%, var(--gray-400) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .cta-section .btn-primary:hover {
-      background: #fff9f9;
-      transform: translateY(-3px);
+    .section-desc {
+      font-size: 1.2rem;
+      color: var(--gray-500);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* footer */
-    .footer {
-      background: #1f1613;
-      color: #ead7cf;
-      padding: 3.5rem 2rem 2.5rem;
-      border-radius: 48px 48px 0 0;
-      border-top: 5px solid var(--japan-red);
-      margin-top: 5rem;
-    }
-
-    .footer-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    .features-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 2rem;
     }
 
-    .footer a {
-      color: #ffbaba;
-      text-decoration: none;
+    .feature-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
 
-    .footer a:hover {
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(255, 51, 102, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(255, 51, 102, 0.2);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+      transform: rotate(-5deg);
+      transition: transform 0.4s var(--spring);
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
       color: white;
     }
 
-    @media (max-width: 700px) {
-      .navbar { flex-direction: column; padding: 1rem; }
-      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
-      .hero h1 { font-size: 3rem; }
-      .section-title { font-size: 2.2rem; }
+    .feature-japanese {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .feature-desc {
+      color: var(--gray-400);
+      line-height: 1.6;
+    }
+
+    /* ==================== LESSON CARDS ==================== */
+    .lessons {
+      padding: 100px 2rem;
+      background: radial-gradient(ellipse at center, rgba(255, 51, 102, 0.05) 0%, transparent 70%);
+    }
+
+    .lesson-slider {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .swiper {
+      padding: 2rem 0;
+    }
+
+    .lesson-card {
+      background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+      border-radius: 24px;
+      padding: 2rem;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+      opacity: 0.1;
+      transition: all 0.6s;
+    }
+
+    .lesson-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .lesson-card:hover::before {
+      top: -25%;
+      right: -25%;
+      opacity: 0.2;
+    }
+
+    .lesson-level {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lesson-character {
+      font-size: 6rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      text-align: center;
+      margin: 2rem 0;
+      background: linear-gradient(135deg, white 0%, var(--gray-500) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+    }
+
+    .lesson-info {
+      text-align: center;
+    }
+
+    .lesson-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .lesson-desc {
+      color: var(--gray-400);
+    }
+
+    /* ==================== PROGRESS VISUALIZATION ==================== */
+    .progress {
+      padding: 100px 2rem;
+      position: relative;
+    }
+
+    .progress-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 3rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .progress-visual {
+      position: relative;
+      height: 400px;
+    }
+
+    .circular-progress {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+
+    .progress-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .progress-stat {
+      background: var(--gray-900);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s var(--ease-out-expo);
+      border: 1px solid transparent;
+    }
+
+    .progress-stat:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(255, 51, 102, 0.2);
+    }
+
+    .progress-stat-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      font-family: 'Bebas Neue', sans-serif;
+    }
+
+    .progress-stat-label {
+      color: var(--gray-500);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.5rem;
+    }
+
+    /* ==================== TESTIMONIALS ==================== */
+    .testimonials {
+      padding: 100px 2rem;
+      background: radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    }
+
+    .testimonial-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s var(--ease-out-expo);
+      position: relative;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .testimonial-quote {
+      font-size: 1.1rem;
+      color: var(--gray-300);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 0;
+      font-size: 3rem;
+      color: var(--primary);
+      font-family: serif;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .author-info {
+      flex: 1;
+    }
+
+    .author-name {
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+
+    .author-role {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+    }
+
+    .testimonial-rating {
+      display: flex;
+      gap: 0.2rem;
+      color: var(--accent);
+      margin-top: 1rem;
+    }
+
+    /* ==================== CTA SECTION ==================== */
+    .cta {
+      padding: 100px 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 50%);
+      opacity: 0.1;
+      transform: translate(-50%, -50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900;
+      font-family: 'Bebas Neue', sans-serif;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, white 0%, var(--gray-400) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-subtitle {
+      font-size: 1.3rem;
+      color: var(--gray-400);
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+      padding: 60px 2rem 30px;
+      background: var(--gray-900);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .footer-desc {
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-400);
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+    }
+
+    .footer-column h4 {
+      color: white;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-500);
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+      color: var(--gray-600);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+    }
+
+    /* ==================== LOADING ANIMATION ==================== */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-kanji {
+      font-size: 100px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .loader-text {
+      color: var(--gray-500);
+      margin-top: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
   </style>
 </head>
 <body>
-  <!-- navigation - clean red/white -->
-  <nav class="navbar">
-    <div class="logo">
-      <i class="fas fa-circle" style="font-size: 1.8rem;"></i> 夢の日本
-      <span style="font-size: 1rem; margin-left: 6px; color:#b55a3a;">Dream of Nihon</span>
+  <!-- Premium Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-kanji">夢</div>
+      <div class="loader-text">Loading Experience...</div>
     </div>
-    <div class="nav-links">
-      <a href="pages/home.html">Home</a>
-      <a href="pages/lesson-explorer.html">Lessons</a>
-      <a href="pages/hiragana.html">Kana</a>
-      <a href="pages/kanji.html">Kanji</a>
-      <a href="pages/flashcards.html">Study <span style="font-size:0.8rem;">勉</span></a>
-      <a href="pages/progress-analytics.html">Progress</a>
-      <a href="pages/login.html" class="btn btn-outline">ログイン</a>
-      <a href="pages/register.html" class="btn btn-primary">Get started</a>
+  </div>
+
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+  <div class="gradient-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <!-- Premium Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+       <a href="/" class="logo">
+        <div class="logo-icon">夢</div>
+        <div class="logo-text">
+          <span class="logo-main">NIHON DREAMS</span>
+          <span class="logo-sub">日本語マスター</span>
+        </div>
+      </a>
+
+      <div class="nav-menu">
+        <a href="#" class="nav-item">Home</a>
+        <a href="#" class="nav-item">Courses</a>
+        <a href="#" class="nav-item">Practice</a>
+        <a href="#" class="nav-item">JLPT</a>
+        <a href="#" class="nav-item">Community</a>
+      </div>
+
+      <div class="nav-cta">
+        <a href="#" class="btn btn-glass">
+          <i class="fas fa-sign-in-alt"></i>
+          Sign In
+        </a>
+        <a href="#" class="btn btn-primary">
+          <i class="fas fa-rocket"></i>
+          Start Free
+        </a>
+      </div>
     </div>
   </nav>
 
-  <main class="container">
-    <!-- hero -->
-    <section class="hero">
-      <div class="hero-text">
-        <span class="hero-badge"><i class="fas fa-chevron-circle-right" style="margin-right:6px;"></i> 日本語学習 · learn Japanese</span>
-        <h1>From <span>hiragana</span> to fluency</h1>
-        <p>Clean, focused lessons & beautiful tools. 夢に向かって — toward your dream.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fas fa-fire"></i>
+          <span>NEXT-GEN LEARNING PLATFORM</span>
+        </div>
+        
+        <h1 class="hero-title">
+          <span class="hero-title-gradient">Master Japanese</span><br>
+          <span class="hero-title-accent">Like Never Before</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Experience the future of language learning with 
+          <span class="typed" id="typed-text"></span>
+        </p>
+        
         <div class="hero-buttons">
-          <a href="pages/register.html" class="btn btn-primary" style="font-size: 1.2rem; padding:0.9rem 2.6rem;"><i class="fas fa-seedling"></i> Begin journey</a>
-          <a href="pages/lesson-explorer.html" class="btn btn-outline" style="font-size: 1.2rem; padding:0.9rem 2.4rem;">Explore lessons</a>
+          <a href="#" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1rem;">
+            <i class="fas fa-play-circle"></i>
+            START YOUR JOURNEY
+          </a>
+          <a href="#" class="btn btn-glass" style="padding: 1rem 2.5rem; font-size: 1rem;">
+            <i class="fas fa-video"></i>
+            WATCH DEMO
+          </a>
         </div>
-        <div style="margin-top: 2rem; display: flex; gap: 2.2rem; color:#694d40;">
-          <span><i class="fas fa-check-circle" style="color: var(--japan-red);"></i> 200+ lessons</span>
-          <span><i class="fas fa-check-circle" style="color: var(--japan-red);"></i> JLPT N5–N1</span>
-          <span><i class="fas fa-check-circle" style="color: var(--japan-red);"></i> 漢字・かな</span>
+        
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">100K+</span>
+            <span class="stat-label">Active Learners</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">5000+</span>
+            <span class="stat-label">Lessons</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">98%</span>
+            <span class="stat-label">Success Rate</span>
+          </div>
         </div>
       </div>
-      <div class="hero-image"></div>
-    </section>
-
-    <!-- features refined -->
-    <h2 class="section-title">Elegant tools · 美しいツール</h2>
-    <div class="card-grid">
-      <div class="feature-card">
-        <i class="fas fa-leaf feature-icon"></i>
-        <h3>Hiragana / Katakana</h3>
-        <p>Stroke order, mnemonics & practice. あいうえお</p>
-        <div class="jp-tag">ひらがな · カタカナ</div>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-mountain feature-icon"></i>
-        <h3>Kanji</h3>
-        <p>Radicals, readings, meanings. 漢字を覚えよう。</p>
-        <div class="jp-tag">常用漢字 · JLPT</div>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-fire feature-icon"></i>
-        <h3>Flashcards + SRS</h3>
-        <p>Spaced repetition. 暗記カード</p>
-        <div class="jp-tag">復習・review</div>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-chart-line feature-icon"></i>
-        <h3>Progress analytics</h3>
-        <p>Mastery, streaks & charts. 進捗</p>
-        <div class="jp-tag">データで見る</div>
-      </div>
-    </div>
-
-    <!-- popular lessons -->
-    <h2 class="section-title">Popular lessons · 人気のレッスン</h2>
-    <div class="lesson-grid">
-      <div class="lesson-card" onclick="location.href='pages/hiragana.html';">
-        <div class="kanji-large">あ</div>
-        <div class="lesson-label">Hiragana</div>
-        <div class="jp-small">ひらがな</div>
-        <small style="color:#b55a3a;">46 basic</small>
-      </div>
-      <div class="lesson-card" onclick="location.href='pages/katakana.html';">
-        <div class="kanji-large">ア</div>
-        <div class="lesson-label">Katakana</div>
-        <div class="jp-small">カタカナ</div>
-        <small style="color:#b55a3a;">loan words</small>
-      </div>
-      <div class="lesson-card" onclick="location.href='pages/kanji.html';">
-        <div class="kanji-large">夢</div>
-        <div class="lesson-label">Kanji · dream</div>
-        <div class="jp-small">ゆめ</div>
-        <small style="color:#b55a3a;">radical 夕</small>
-      </div>
-      <div class="lesson-card" onclick="location.href='pages/quiz.html';">
-        <i class="fas fa-puzzle-piece" style="font-size: 3.5rem; color: var(--japan-red); margin: 0.8rem 0;"></i>
-        <div class="lesson-label">Daily quiz</div>
-        <div class="jp-small">クイズ</div>
-        <small style="color:#b55a3a;">challenge</small>
-      </div>
-    </div>
-
-    <!-- progress area -->
-    <h2 class="section-title">Your progress · あなたの進捗</h2>
-    <div class="analytics-panel">
-      <div class="chart-box">
-        <canvas id="progressChart" width="300" height="150"></canvas>
-      </div>
-      <div class="stats-area">
-        <h3 style="color:#2c221e; font-size: 1.8rem; font-weight:500;">Overall mastery <i class="fas fa-chart-pie" style="color: var(--japan-red);"></i> <span style="font-size:1rem;">習得度</span></h3>
-        <div class="stat-blocks">
-          <div class="stat-block"><span class="stat-number">64%</span><br>Hiragana <span style="font-size:0.8rem;">ひらがな</span></div>
-          <div class="stat-block"><span class="stat-number">42%</span><br>Katakana <span style="font-size:0.8rem;">カタカナ</span></div>
-          <div class="stat-block"><span class="stat-number">18%</span><br>Kanji <span style="font-size:0.8rem;">漢字</span></div>
+      
+      <div class="hero-visual">
+        <div class="card-3d">
+          <div class="card-face front">日</div>
+          <div class="card-face back">本</div>
         </div>
-        <p><i class="fas fa-calendar-alt" style="color:var(--japan-red);"></i> 5‑day streak · 今週15 lessons</p>
-        <a href="pages/progress-analytics.html" class="btn btn-outline" style="margin-top:0.8rem;">詳細 analytics →</a>
       </div>
     </div>
+  </section>
 
-    <!-- cta solid red -->
-    <div class="cta-section">
-      <h2>Continue your journey · 旅を続けよう</h2>
-      <p style="font-size: 1.2rem; max-width: 600px; margin: 0.5rem auto;">Dashboard, JLPT prep, admin tools — all inside</p>
-      <a href="pages/dashboard.html" class="btn btn-primary"><i class="fas fa-tachometer-alt"></i> Dashboard ダッシュボード</a>
-      <div style="margin-top: 2rem; display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; color:#ffdede;">
-        <span><i class="fas fa-shield"></i> user‑management</span>
-        <span><i class="fas fa-book-open"></i> lesson‑builder</span>
-        <span><i class="fas fa-trophy"></i> badges / leaderboard</span>
+  <!-- Features Section -->
+  <section class="features">
+    <div class="section-header">
+      <span class="section-tag">FEATURES</span>
+      <h2 class="section-title">Everything You Need to Succeed</h2>
+      <p class="section-desc">Cutting-edge tools designed to accelerate your Japanese mastery</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="feature-title">AI-Powered Learning</h3>
+        <p class="feature-japanese">AIパワード学習</p>
+        <p class="feature-desc">
+          Personalized curriculum that adapts to your learning style and pace in real-time
+        </p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-microphone-alt"></i>
+        </div>
+        <h3 class="feature-title">Voice Recognition</h3>
+        <p class="feature-japanese">音声認識</p>
+        <p class="feature-desc">
+          Perfect your pronunciation with advanced speech recognition technology
+        </p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <h3 class="feature-title">Gamified Experience</h3>
+        <p class="feature-japanese">ゲーミフィケーション</p>
+        <p class="feature-desc">
+          Learn through interactive games, challenges, and achievement systems
+        </p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-vr-cardboard"></i>
+        </div>
+        <h3 class="feature-title">Immersive VR Mode</h3>
+        <p class="feature-japanese">没入型VR</p>
+        <p class="feature-desc">
+          Step into virtual Japan and practice in real-world scenarios
+        </p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="feature-title">Live Classes</h3>
+        <p class="feature-japanese">ライブクラス</p>
+        <p class="feature-desc">
+          Join real-time sessions with native speakers and global learners
+        </p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3 class="feature-title">Advanced Analytics</h3>
+        <p class="feature-japanese">高度な分析</p>
+        <p class="feature-desc">
+          Track your progress with detailed insights and performance metrics
+        </p>
       </div>
     </div>
-  </main>
+  </section>
 
-  <!-- footer -->
+  <!-- Lessons Section -->
+  <section class="lessons">
+    <div class="section-header">
+      <span class="section-tag">CURRICULUM</span>
+      <h2 class="section-title">Start Your Learning Path</h2>
+      <p class="section-desc">From absolute beginner to fluent speaker</p>
+    </div>
+    
+    <div class="lesson-slider">
+      <div class="swiper" id="lessonSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="lesson-card">
+              <span class="lesson-level">BEGINNER</span>
+              <div class="lesson-character">あ</div>
+              <div class="lesson-info">
+                <h3 class="lesson-title">Hiragana Basics</h3>
+                <p class="lesson-desc">Master the 46 basic characters</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="swiper-slide">
+            <div class="lesson-card">
+              <span class="lesson-level">BEGINNER</span>
+              <div class="lesson-character">ア</div>
+              <div class="lesson-info">
+                <h3 class="lesson-title">Katakana Mastery</h3>
+                <p class="lesson-desc">Learn foreign word writing</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="swiper-slide">
+            <div class="lesson-card">
+              <span class="lesson-level">INTERMEDIATE</span>
+              <div class="lesson-character">漢</div>
+              <div class="lesson-info">
+                <h3 class="lesson-title">Essential Kanji</h3>
+                <p class="lesson-desc">2000+ characters with mnemonics</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="swiper-slide">
+            <div class="lesson-card">
+              <span class="lesson-level">ADVANCED</span>
+              <div class="lesson-character">敬</div>
+              <div class="lesson-info">
+                <h3 class="lesson-title">Keigo & Business</h3>
+                <p class="lesson-desc">Professional Japanese</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="swiper-slide">
+            <div class="lesson-card">
+              <span class="lesson-level">N5-N1</span>
+              <div class="lesson-character">試</div>
+              <div class="lesson-info">
+                <h3 class="lesson-title">JLPT Preparation</h3>
+                <p class="lesson-desc">Complete test preparation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progress Section -->
+  <section class="progress">
+    <div class="section-header">
+      <span class="section-tag">ANALYTICS</span>
+      <h2 class="section-title">Track Your Progress</h2>
+      <p class="section-desc">Real-time insights into your learning journey</p>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-grid">
+        <div class="progress-visual">
+          <div class="circular-progress">
+            <svg width="300" height="300">
+              <circle cx="150" cy="150" r="140" stroke="rgba(255, 255, 255, 0.1)" stroke-width="20" fill="none"/>
+              <circle class="progress-ring" cx="150" cy="150" r="140" stroke="url(#gradient)" stroke-width="20" fill="none" stroke-dasharray="880" stroke-dashoffset="200" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FF3366"/>
+                  <stop offset="100%" stop-color="#FFD700"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+              <div style="font-size: 3rem; font-weight: 900; color: var(--primary); font-family: 'Bebas Neue', sans-serif;">77%</div>
+              <div style="color: var(--gray-500); text-transform: uppercase; font-size: 0.8rem;">Complete</div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; color: white;">Your Learning Stats</h3>
+          
+          <div class="progress-stats">
+            <div class="progress-stat">
+              <div class="progress-stat-value">342</div>
+              <div class="progress-stat-label">Kanji Learned</div>
+            </div>
+            <div class="progress-stat">
+              <div class="progress-stat-value">1.2K</div>
+              <div class="progress-stat-label">Vocabulary</div>
+            </div>
+            <div class="progress-stat">
+              <div class="progress-stat-value">45</div>
+              <div class="progress-stat-label">Day Streak</div>
+            </div>
+            <div class="progress-stat">
+              <div class="progress-stat-value">N3</div>
+              <div class="progress-stat-label">Current Level</div>
+            </div>
+            <div class="progress-stat">
+              <div class="progress-stat-value">156</div>
+              <div class="progress-stat-label">Hours Studied</div>
+            </div>
+            <div class="progress-stat">
+              <div class="progress-stat-value">28</div>
+              <div class="progress-stat-label">Achievements</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="section-header">
+      <span class="section-tag">SUCCESS STORIES</span>
+      <h2 class="section-title">Join Thousands of Success Stories</h2>
+      <p class="section-desc">Real learners, real results</p>
+    </div>
+    
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">
+          The AI-powered curriculum adapted perfectly to my learning style. I passed JLPT N2 in just 10 months!
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">SK</div>
+          <div class="author-info">
+            <div class="author-name">Sarah Kim</div>
+            <div class="author-role">Software Engineer • JLPT N2</div>
+          </div>
+        </div>
+        <div class="testimonial-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-quote">
+          The VR immersion feature is incredible. It's like being in Japan while learning from home.
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">MJ</div>
+          <div class="author-info">
+            <div class="author-name">Michael Johnson</div>
+            <div class="author-role">Designer • Conversational</div>
+          </div>
+        </div>
+        <div class="testimonial-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-quote">
+          From zero to reading manga in Japanese in 6 months. The gamification kept me motivated daily!
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">AL</div>
+          <div class="author-info">
+            <div class="author-name">Alex Liu</div>
+            <div class="author-role">Student • 1000+ Kanji</div>
+          </div>
+        </div>
+        <div class="testimonial-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Transform Your Life?</h2>
+      <p class="cta-subtitle">Join 100,000+ learners mastering Japanese with cutting-edge technology</p>
+      
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary" style="padding: 1.2rem 3rem; font-size: 1.1rem;">
+          <i class="fas fa-rocket"></i>
+          START FREE TRIAL
+        </a>
+        <a href="#" class="btn btn-glass" style="padding: 1.2rem 3rem; font-size: 1.1rem;">
+          <i class="fas fa-calendar"></i>
+          BOOK A DEMO
+        </a>
+      </div>
+      
+      <p style="margin-top: 2rem; color: var(--gray-600); font-size: 0.9rem;">
+        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+        No credit card required • 14-day free trial • Cancel anytime
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
-    <div class="footer-grid container">
-      <div>
-        <h4 style="font-size: 2rem; color:#fcc;">夢の日本</h4>
-        <p style="margin: 0.5rem 0;">Dream of Nihon · 和のデザイン</p>
-        <div style="display: flex; gap: 1.5rem;">
-          <a href="#"><i class="fab fa-github"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo-icon">夢</div>
+          <div>
+            <div style="font-weight: 700; font-size: 1.2rem; color: white;">NIHON DREAMS</div>
+            <div style="font-size: 0.8rem; color: var(--gray-500);">Next-gen Japanese Learning</div>
+          </div>
+        </div>
+        
+        <p class="footer-desc">
+          Experience the future of language learning with AI-powered curriculum, VR immersion, and real-time analytics.
+        </p>
+        
+        <div class="footer-social">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
         </div>
       </div>
-      <div><h5>Explore · 探す</h5><p><a href="pages/lesson-explorer.html">lessons</a><br><a href="pages/kanji.html">kanji 漢字</a><br><a href="pages/flashcards.html">flashcards</a></p></div>
-      <div><h5>Account · アカウント</h5><p><a href="pages/login.html">login</a><br><a href="pages/register.html">register</a><br><a href="pages/profile.html">profile</a></p></div>
-      <div><h5>Admin · 管理</h5><p><a href="pages/admin/dashboard.html">dashboard</a><br><a href="pages/admin/course-builder.html">course builder</a><br><a href="pages/admin/analytics-dashboard.html">analytics</a></p></div>
+      
+      <div class="footer-column">
+        <h4>Learning</h4>
+        <ul class="footer-links">
+          <li><a href="#">Hiragana Course</a></li>
+          <li><a href="#">Katakana Course</a></li>
+          <li><a href="#">Kanji System</a></li>
+          <li><a href="#">Grammar Patterns</a></li>
+          <li><a href="#">JLPT Prep</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h4>Features</h4>
+        <ul class="footer-links">
+          <li><a href="#">AI Learning</a></li>
+          <li><a href="#">VR Mode</a></li>
+          <li><a href="#">Live Classes</a></li>
+          <li><a href="#">Mobile App</a></li>
+          <li><a href="#">Analytics</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
     </div>
-    <div style="text-align: center; margin-top: 3rem; opacity:0.6;">© dream of nihon · red & white</div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2024 Nihon Dreams. All rights reserved. Made with ❤️ and 🍜 in Tokyo.</p>
+    </div>
   </footer>
 
-  <!-- chart init -->
+  <!-- Scripts -->
   <script>
-    (function() {
-      const ctx = document.getElementById('progressChart')?.getContext('2d');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-            labels: ['Hiragana ひらがな', 'Katakana カタカナ', 'Kanji 漢字'],
-            datasets: [{
-              data: [64, 42, 18],
-              backgroundColor: ['#b22222', '#d97a7a', '#e5b2b2'],
-              borderColor: '#ffffff',
-              borderWidth: 4,
-              borderRadius: 8
-            }]
-          },
-          options: {
-            cutout: '60%',
-            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#b22222' } },
-            responsive: true,
-            maintainAspectRatio: true
-          }
-        });
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 1500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
       }
-      // small toast
-      const toast = document.createElement('div');
-      toast.style.position = 'fixed';
-      toast.style.bottom = '30px';
-      toast.style.right = '30px';
-      toast.style.backgroundColor = '#b22222';
-      toast.style.color = 'white';
-      toast.style.padding = '14px 26px';
-      toast.style.borderRadius = '50px';
-      toast.style.boxShadow = '0 12px 24px rgba(178,34,34,0.4)';
-      toast.style.zIndex = '999';
-      toast.style.fontWeight = '500';
-      toast.style.border = '2px solid white';
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.4s';
-      toast.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 10px;"></i> いらっしゃい · refined red & white';
-      document.body.appendChild(toast);
-      setTimeout(() => { toast.style.opacity = '1'; }, 500);
-      setTimeout(() => { toast.style.opacity = '0'; }, 4000);
-    })();
+    });
+
+    // Typed.js
+    const typed = new Typed('#typed-text', {
+      strings: [
+        'AI-powered lessons',
+        'VR immersion',
+        'real-time feedback',
+        'gamified challenges',
+        'native speakers'
+      ],
+      typeSpeed: 50,
+      backSpeed: 30,
+      loop: true,
+      backDelay: 2000
+    });
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animate feature cards on scroll
+    gsap.utils.toArray('.feature-card').forEach((card, index) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: 'power3.out'
+      });
+    });
+
+    // Animate progress stats
+    gsap.utils.toArray('.progress-stat').forEach((stat, index) => {
+      gsap.from(stat, {
+        scrollTrigger: {
+          trigger: stat,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: 'back.out(1.7)'
+      });
+    });
+
+    // Swiper initialization
+    const lessonSwiper = new Swiper('#lessonSwiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2
+        },
+        768: {
+          slidesPerView: 3
+        },
+        1024: {
+          slidesPerView: 4
+        }
+      },
+      effect: 'coverflow',
+      coverflowEffect: {
+        rotate: 20,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true
+      }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('.btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Parallax effect for orbs
+    document.addEventListener('mousemove', (e) => {
+      const orbs = document.querySelectorAll('.orb');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      orbs.forEach((orb, index) => {
+        const speed = (index + 1) * 10;
+        const xPos = (x - 0.5) * speed;
+        const yPos = (y - 0.5) * speed;
+        
+        orb.style.transform = `translate(${xPos}px, ${yPos}px)`;
+      });
+    });
+
+    console.log('🎌 Nihon Dreams - Premium Japanese Learning Platform Loaded');
   </script>
 </body>
 </html>
