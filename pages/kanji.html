@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>漢字練習 · お絵かき | 夢の日本</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- complete dark mode (same as hiragana/katakana) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: appear 0.5s ease forwards;
+      transition: background-color 0.3s ease, color 0.2s ease;
+    }
+
+    @keyframes appear { to { opacity: 1; } }
+
+    /* Light theme (default) */
+    :root {
+      --japan-red: #b22222;
+      --japan-red-light: #fae6e6;
+      --paper-white: #ffffff;
+      --charcoal: #2a2523;
+      --bg-body: #fcfaf9;
+      --text-primary: #1e1b1a;
+      --text-secondary: #4e413b;
+      --card-bg: #ffffff;
+      --card-border: #fcd7d7;
+      --filter-bg: #ffffff;
+      --filter-border: #fcd7d7;
+      --input-bg: #fef8f7;
+      --input-border: #f0d3d3;
+      --footer-bg: #1f1613;
+      --footer-text: #ead7cf;
+      --footer-link: #ffbaba;
+      --shadow-color: rgba(178, 34, 34, 0.15);
+      --toast-bg: #b22222;
+      --canvas-bg: #fffefc;
+      --canvas-border: #ecc4c4;
+    }
+
+    /* Dark theme */
+    body.dark-mode {
+      --japan-red: #e05a5a;
+      --japan-red-light: #3f2a2a;
+      --paper-white: #2a2a2a;
+      --charcoal: #e0d6d2;
+      --bg-body: #1a1a1a;
+      --text-primary: #f0e6e2;
+      --text-secondary: #cbb5ab;
+      --card-bg: #2d2d2d;
+      --card-border: #5f4444;
+      --filter-bg: #2d2d2d;
+      --filter-border: #5f4444;
+      --input-bg: #3a3a3a;
+      --input-border: #774e4e;
+      --footer-bg: #0f0f0f;
+      --footer-text: #b3a39b;
+      --footer-link: #d88d8d;
+      --shadow-color: rgba(224, 90, 90, 0.25);
+      --toast-bg: #c44a4a;
+      --canvas-bg: #2a2a2a;
+      --canvas-border: #774e4e;
+    }
+
+    body {
+      background: var(--bg-body);
+      color: var(--text-primary);
+    }
+
+    /* --- navbar (same as other pages) --- */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--japan-red);
+      box-shadow: 0 4px 16px -10px var(--shadow-color);
+      flex-wrap: wrap;
+      transition: background 0.3s;
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.3px;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+      color: var(--japan-red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: var(--japan-red);
+      color: var(--japan-red);
+    }
+
+    /* theme toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1.5px solid var(--japan-red);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: var(--japan-red);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--japan-red-light);
+      transform: scale(1.02);
+    }
+
+    .theme-toggle i {
+      font-size: 1.1rem;
+    }
+
+    /* --- container --- */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+      padding: 0 2rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* breadcrumb */
+    .breadcrumb {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--japan-red);
+      text-decoration: none;
+    }
+
+    /* page header */
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .title-badge {
+      background: var(--japan-red-light);
+      color: var(--japan-red);
+      padding: 0.4rem 1.4rem;
+      border-radius: 40px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid var(--card-border);
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.2rem;
+      font-weight: 550;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .page-header h1 span {
+      color: var(--japan-red);
+    }
+
+    /* practice row: character selector + canvas */
+    .practice-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .char-selector {
+      flex: 1 1 220px;
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 1.8rem 1.2rem;
+      border: 2px solid var(--card-border);
+      box-shadow: 0 16px 28px -16px var(--shadow-color);
+      height: fit-content;
+    }
+
+    .char-selector h3 {
+      font-size: 1.4rem;
+      color: var(--japan-red);
+      margin-bottom: 1.2rem;
+      text-align: center;
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 0.6rem;
+    }
+
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+
+    .char-option {
+      background: var(--japan-red-light);
+      border: 2px solid transparent;
+      border-radius: 24px;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .char-option.active {
+      border-color: var(--japan-red);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px #fcd7d7;
+    }
+
+    .char-option:hover {
+      transform: scale(1.02);
+      border-color: var(--japan-red);
+    }
+
+    .reading-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    /* drawing canvas area */
+    .canvas-area {
+      flex: 3 1 500px;
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 1.8rem;
+      border: 2px solid var(--card-border);
+      box-shadow: 0 16px 28px -16px var(--shadow-color);
+    }
+
+    .canvas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .selected-char {
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--japan-red);
+      background: var(--japan-red-light);
+      padding: 0 1.5rem;
+      border-radius: 50px;
+      border: 2px dashed var(--japan-red);
+    }
+
+    .canvas-tools {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background: transparent;
+      border: 1.5px solid var(--japan-red);
+      border-radius: 40px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tool-btn:hover {
+      background: var(--japan-red-light);
+    }
+
+    .canvas-wrapper {
+      background: var(--canvas-bg);
+      border-radius: 32px;
+      padding: 1.2rem;
+      border: 2px solid var(--canvas-border);
+      margin: 1.5rem 0;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--canvas-bg);
+      border-radius: 24px;
+      touch-action: none;
+      cursor: crosshair;
+      border: 1px solid var(--card-border);
+    }
+
+    .stroke-hint {
+      background: var(--japan-red-light);
+      border-radius: 28px;
+      padding: 1.2rem;
+      border: 2px dashed var(--japan-red);
+      color: var(--text-secondary);
+    }
+
+    .stroke-hint i {
+      color: var(--japan-red);
+    }
+
+    /* mini quiz / recognition */
+    .recognition-card {
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 2rem;
+      border: 2px solid var(--card-border);
+      margin: 2rem 0;
+    }
+
+    .recognition-options {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    .recog-btn {
+      background: var(--japan-red-light);
+      border: 1.5px solid var(--japan-red);
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.15s;
+      min-width: 90px;
+    }
+
+    .recog-btn:hover {
+      background: var(--japan-red);
+      color: white;
+    }
+
+    /* footer */
+    .footer-compact {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 2rem 2rem 1.5rem;
+      border-top: 5px solid var(--japan-red);
+      text-align: center;
+      font-size: 0.95rem;
+      margin-top: auto;
+    }
+
+    .footer-compact a {
+      color: var(--footer-link);
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+
+    .footer-compact a:hover {
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .navbar { flex-direction: column; padding: 1rem; }
+      .nav-links { gap: 1rem; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-circle"></i> 夢の日本
+      <span style="font-size: 0.9rem; margin-left: 5px; color: var(--japan-red);">Dream of Nihon</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pages/lesson-explorer.html">Lessons</a>
+      <a href="pages/hiragana.html">Hiragana</a>
+      <a href="pages/katakana.html">Katakana</a>
+      <a href="pages/kanji.html" style="border-bottom-color: var(--japan-red);">Kanji</a>
+      <a href="pages/flashcards.html">Study</a>
+      <!-- theme toggle -->
+      <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun" id="themeIconSun"></i>
+        <i class="fas fa-moon" id="themeIconMoon" style="display: none;"></i>
+        <span id="themeText">Light</span>
+      </div>
+      <a href="pages/login.html" style="border:1.5px solid var(--japan-red); padding:0.4rem 1.2rem; border-radius:40px;">ログイン</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+      <a href="pages/lesson-explorer.html">Lessons</a> <i class="fas fa-chevron-right"></i>
+      <span style="color: var(--text-secondary);">漢字 · 練習 (draw)</span>
+    </div>
+
+    <!-- header -->
+    <div class="page-header">
+      <span class="title-badge"><i class="fas fa-paint-brush"></i> かく · 練習</span>
+      <h1>Kanji <span>drawing</span></h1>
+      <p class="header-sub" style="color: var(--text-secondary); max-width: 600px;">Choose a kanji and trace it on the canvas. 漢字をなぞって覚えよう。</p>
+    </div>
+
+    <!-- main practice row -->
+    <div class="practice-row">
+      <!-- left: character selector (basic kanji) -->
+      <div class="char-selector">
+        <h3><i class="fas fa-arrow-pointer"></i> 漢字をえらぶ</h3>
+        <div class="char-grid">
+          <div class="char-option active" data-char="日" data-reading="にち・ひ" id="char-日">
+            日<div class="reading-label">sun/day</div>
+          </div>
+          <div class="char-option" data-char="月" data-reading="げつ・つき" id="char-月">
+            月<div class="reading-label">moon</div>
+          </div>
+          <div class="char-option" data-char="火" data-reading="か・ひ" id="char-火">
+            火<div class="reading-label">fire</div>
+          </div>
+          <div class="char-option" data-char="水" data-reading="すい・みず" id="char-水">
+            水<div class="reading-label">water</div>
+          </div>
+          <div class="char-option" data-char="木" data-reading="もく・き" id="char-木">
+            木<div class="reading-label">tree</div>
+          </div>
+          <div class="char-option" data-char="金" data-reading="きん・かね" id="char-金">
+            金<div class="reading-label">gold</div>
+          </div>
+        </div>
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; text-align: center;"><i class="fas fa-hand"></i> クリックで切替</p>
+      </div>
+
+      <!-- right: drawing canvas -->
+      <div class="canvas-area">
+        <div class="canvas-header">
+          <div class="selected-char" id="selectedCharDisplay">日</div>
+          <div class="canvas-tools">
+            <button class="tool-btn" id="clearCanvasBtn"><i class="fas fa-eraser"></i> 消す</button>
+            <button class="tool-btn" id="toggleHintBtn"><i class="fas fa-eye"></i> お手本</button>
+          </div>
+        </div>
+
+        <!-- canvas wrapper -->
+        <div class="canvas-wrapper">
+          <canvas id="drawCanvas" width="500" height="300" style="width:100%; height:auto; aspect-ratio:500/300;"></canvas>
+        </div>
+
+        <!-- stroke hint (kanji specific) -->
+        <div class="stroke-hint" id="strokeHint">
+          <i class="fas fa-pencil"></i> <strong>日 (sun):</strong> 4 strokes — 縦→横折→横→横
+        </div>
+      </div>
+    </div>
+
+    <!-- recognition mini-game (kanji) -->
+    <div class="recognition-card">
+      <h3 style="color: var(--japan-red); margin-bottom: 1rem;"><i class="fas fa-question-circle"></i> どの漢字？ — recognition</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">What kanji did you just draw? (click to check)</p>
+      <div class="recognition-options">
+        <button class="recog-btn" data-test="日">日</button>
+        <button class="recog-btn" data-test="月">月</button>
+        <button class="recog-btn" data-test="火">火</button>
+        <button class="recog-btn" data-test="水">水</button>
+        <button class="recog-btn" data-test="木">木</button>
+        <button class="recog-btn" data-test="金">金</button>
+      </div>
+      <p style="color: var(--text-secondary);"><i class="fas fa-check-circle" style="color: var(--japan-red);"></i> 答え合わせ: 選択中の文字は <strong id="currentCharLabel">日</strong> です</p>
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer class="footer-compact">
+    <div>
+      <span><a href="pages/admin/dashboard.html">管理</a> · <a href="pages/login.html">ログイン</a> · <a href="pages/register.html">新規登録</a></span>
+      <p style="margin-top: 0.8rem;">© 夢の日本 · 漢字練習 · なぞって学ぶ</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // ----- DARK MODE TOGGLE (same as hiragana/katakana) -----
+      const themeToggle = document.getElementById('themeToggle');
+      const iconSun = document.getElementById('themeIconSun');
+      const iconMoon = document.getElementById('themeIconMoon');
+      const themeText = document.getElementById('themeText');
+      
+      const savedTheme = localStorage.getItem('dreamNihonTheme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'inline-block';
+        themeText.textContent = 'Dark';
+      } else {
+        iconSun.style.display = 'inline-block';
+        iconMoon.style.display = 'none';
+        themeText.textContent = 'Light';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+          document.body.classList.remove('dark-mode');
+          iconSun.style.display = 'inline-block';
+          iconMoon.style.display = 'none';
+          themeText.textContent = 'Light';
+          localStorage.setItem('dreamNihonTheme', 'light');
+        } else {
+          document.body.classList.add('dark-mode');
+          iconSun.style.display = 'none';
+          iconMoon.style.display = 'inline-block';
+          themeText.textContent = 'Dark';
+          localStorage.setItem('dreamNihonTheme', 'dark');
+        }
+      });
+
+      // ----- DRAWING CANVAS LOGIC -----
+      const canvas = document.getElementById('drawCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      canvas.width = 500;
+      canvas.height = 300;
+      
+      let drawing = false;
+      let lastX = 0, lastY = 0;
+      
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#b22222';
+      
+      function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getCanvasCoordinates(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+      }
+
+      function draw(e) {
+        e.preventDefault();
+        if (!drawing) return;
+        const pos = getCanvasCoordinates(e);
+        const currentX = pos.x;
+        const currentY = pos.y;
+        
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--japan-red').trim() || '#b22222';
+        ctx.lineWidth = 8;
+        ctx.lineTo(currentX, currentY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(currentX, currentY);
+        
+        lastX = currentX;
+        lastY = currentY;
+      }
+
+      function stopDrawing() {
+        drawing = false;
+        ctx.beginPath();
+      }
+
+      function getCanvasCoordinates(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        let clientX, clientY;
+        if (e.touches) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        
+        const x = (clientX - rect.left) * scaleX;
+        const y = (clientY - rect.top) * scaleY;
+        return { x: Math.min(canvas.width, Math.max(0, x)), y: Math.min(canvas.height, Math.max(0, y)) };
+      }
+
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseleave', stopDrawing);
+      
+      canvas.addEventListener('touchstart', startDrawing);
+      canvas.addEventListener('touchmove', draw);
+      canvas.addEventListener('touchend', stopDrawing);
+      canvas.addEventListener('touchcancel', stopDrawing);
+
+      // clear canvas
+      document.getElementById('clearCanvasBtn').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+
+      // ----- character switching & stroke hints (kanji) -----
+      const charOptions = document.querySelectorAll('.char-option');
+      const selectedDisplay = document.getElementById('selectedCharDisplay');
+      const strokeHint = document.getElementById('strokeHint');
+      const currentCharLabel = document.getElementById('currentCharLabel');
+      
+      const hintMap = {
+        '日': '日 (sun/day): 4 strokes — 縦 → 横折 → 横 → 横',
+        '月': '月 (moon): 4 strokes — 左払い → 横折 → 横 → 横',
+        '火': '火 (fire): 4 strokes — 点 → 左払い → 右払い → はねる',
+        '水': '水 (water): 4 strokes — 縦 → 横折 → 横 → 縦 (左右)',
+        '木': '木 (tree): 4 strokes — 横 → 縦 → 左払い → 右払い',
+        '金': '金 (gold): 8 strokes — 人 → 王 → 点々 (complex)'
+      };
+
+      function setActiveChar(char, reading) {
+        selectedDisplay.textContent = char;
+        strokeHint.innerHTML = `<i class="fas fa-pencil"></i> ${hintMap[char] || 'Hint: check stroke order'}`;
+        currentCharLabel.textContent = char;
+        
+        charOptions.forEach(opt => {
+          if (opt.dataset.char === char) {
+            opt.classList.add('active');
+          } else {
+            opt.classList.remove('active');
+          }
+        });
+      }
+
+      charOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const char = opt.dataset.char;
+          const reading = opt.dataset.reading;
+          setActiveChar(char, reading);
+        });
+      });
+
+      // recognition buttons
+      const recogBtns = document.querySelectorAll('.recog-btn');
+      recogBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selectedChar = selectedDisplay.textContent;
+          const guessedChar = btn.dataset.test;
+          if (selectedChar === guessedChar) {
+            showToast(`✅ 正解！ ${guessedChar} です`);
+          } else {
+            showToast(`❌ 違います。 今は ${selectedChar} を練習中`);
+          }
+        });
+      });
+
+      // toast helper
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '30px';
+        toast.style.right = '30px';
+        toast.style.backgroundColor = 'var(--toast-bg)';
+        toast.style.color = 'white';
+        toast.style.padding = '14px 26px';
+        toast.style.borderRadius = '50px';
+        toast.style.boxShadow = '0 12px 24px rgba(0,0,0,0.4)';
+        toast.style.zIndex = '999';
+        toast.style.fontWeight = '500';
+        toast.style.border = '2px solid white';
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        toast.innerHTML = '<i class="fas fa-circle-check" style="margin-right: 8px;"></i>' + message;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '1'; }, 20);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 2000);
+      }
+
+      // toggle hint (flash effect)
+      document.getElementById('toggleHintBtn').addEventListener('click', () => {
+        strokeHint.style.transition = 'background 0.2s';
+        strokeHint.style.background = 'var(--japan-red)';
+        strokeHint.style.color = 'white';
+        setTimeout(() => {
+          strokeHint.style.background = 'var(--japan-red-light)';
+          strokeHint.style.color = 'var(--text-secondary)';
+        }, 200);
+      });
+
+      // welcome toast
+      setTimeout(() => {
+        showToast('🖌️ 漢字をなぞって練習しよう');
+      }, 500);
+    })();
+  </script>
+</body>
+</html>

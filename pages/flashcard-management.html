@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>単語帳 · 暗記管理 | 夢の日本</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- complete dark mode (shared with all pages) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: appear 0.5s ease forwards;
+      transition: background-color 0.3s ease, color 0.2s ease;
+    }
+
+    @keyframes appear { to { opacity: 1; } }
+
+    /* Light theme (default) */
+    :root {
+      --japan-red: #b22222;
+      --japan-red-light: #fae6e6;
+      --paper-white: #ffffff;
+      --charcoal: #2a2523;
+      --bg-body: #fcfaf9;
+      --text-primary: #1e1b1a;
+      --text-secondary: #4e413b;
+      --card-bg: #ffffff;
+      --card-border: #fcd7d7;
+      --filter-bg: #ffffff;
+      --filter-border: #fcd7d7;
+      --input-bg: #fef8f7;
+      --input-border: #f0d3d3;
+      --footer-bg: #1f1613;
+      --footer-text: #ead7cf;
+      --footer-link: #ffbaba;
+      --shadow-color: rgba(178, 34, 34, 0.15);
+      --toast-bg: #b22222;
+      --canvas-bg: #fffefc;
+      --canvas-border: #ecc4c4;
+    }
+
+    /* Dark theme */
+    body.dark-mode {
+      --japan-red: #e05a5a;
+      --japan-red-light: #3f2a2a;
+      --paper-white: #2a2a2a;
+      --charcoal: #e0d6d2;
+      --bg-body: #1a1a1a;
+      --text-primary: #f0e6e2;
+      --text-secondary: #cbb5ab;
+      --card-bg: #2d2d2d;
+      --card-border: #5f4444;
+      --filter-bg: #2d2d2d;
+      --filter-border: #5f4444;
+      --input-bg: #3a3a3a;
+      --input-border: #774e4e;
+      --footer-bg: #0f0f0f;
+      --footer-text: #b3a39b;
+      --footer-link: #d88d8d;
+      --shadow-color: rgba(224, 90, 90, 0.25);
+      --toast-bg: #c44a4a;
+      --canvas-bg: #2a2a2a;
+      --canvas-border: #774e4e;
+    }
+
+    body {
+      background: var(--bg-body);
+      color: var(--text-primary);
+    }
+
+    /* --- navbar (same as other pages) --- */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--japan-red);
+      box-shadow: 0 4px 16px -10px var(--shadow-color);
+      flex-wrap: wrap;
+      transition: background 0.3s;
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.3px;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+      color: var(--japan-red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: var(--japan-red);
+      color: var(--japan-red);
+    }
+
+    /* theme toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1.5px solid var(--japan-red);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: var(--japan-red);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--japan-red-light);
+      transform: scale(1.02);
+    }
+
+    .theme-toggle i {
+      font-size: 1.1rem;
+    }
+
+    /* --- container --- */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+      padding: 0 2rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* breadcrumb */
+    .breadcrumb {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--japan-red);
+      text-decoration: none;
+    }
+
+    /* page header */
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .title-badge {
+      background: var(--japan-red-light);
+      color: var(--japan-red);
+      padding: 0.4rem 1.4rem;
+      border-radius: 40px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid var(--card-border);
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.2rem;
+      font-weight: 550;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .page-header h1 span {
+      color: var(--japan-red);
+    }
+
+    /* deck filter bar */
+    .deck-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0 2.5rem;
+      background: var(--card-bg);
+      border-radius: 60px;
+      padding: 0.8rem 1.5rem;
+      border: 2px solid var(--card-border);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .deck-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .deck-btn {
+      background: transparent;
+      border: 1.5px solid var(--japan-red);
+      border-radius: 40px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .deck-btn.active {
+      background: var(--japan-red);
+      color: white;
+    }
+
+    .deck-btn:hover {
+      background: var(--japan-red-light);
+    }
+
+    .stats-badge {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* flashcard carousel */
+    .card-carousel {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .carousel-arrow {
+      background: var(--card-bg);
+      border: 2px solid var(--japan-red);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.15s;
+      flex-shrink: 0;
+    }
+
+    .carousel-arrow:hover {
+      background: var(--japan-red);
+      color: white;
+    }
+
+    .flashcard-container {
+      flex: 1;
+      perspective: 1500px;
+      cursor: pointer;
+    }
+
+    .flashcard {
+      background: var(--card-bg);
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      border: 3px solid var(--card-border);
+      box-shadow: 0 24px 40px -20px var(--shadow-color);
+      transition: transform 0.4s ease, box-shadow 0.2s;
+      text-align: center;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .flashcard:hover {
+      box-shadow: 0 32px 48px -20px var(--japan-red);
+    }
+
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-front, .flashcard-back {
+      backface-visibility: hidden;
+    }
+
+    .flashcard-back {
+      transform: rotateY(180deg);
+      display: none; /* handled by flip class */
+    }
+
+    .flashcard.flipped .flashcard-front {
+      display: none;
+    }
+    .flashcard.flipped .flashcard-back {
+      display: block;
+    }
+
+    .card-character {
+      font-size: 6rem;
+      font-weight: 500;
+      color: var(--japan-red);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .card-reading {
+      font-size: 1.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .card-meaning {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .card-hint {
+      margin-top: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* confidence rating */
+    .rating-section {
+      background: var(--card-bg);
+      border-radius: 48px;
+      padding: 2rem;
+      border: 2px solid var(--card-border);
+      margin: 2rem 0 3rem;
+      text-align: center;
+    }
+
+    .rating-title {
+      color: var(--japan-red);
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .rating-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .rating-btn {
+      background: var(--japan-red-light);
+      border: 2px solid var(--japan-red);
+      border-radius: 60px;
+      padding: 1rem 2rem;
+      min-width: 120px;
+      font-weight: 600;
+      color: var(--japan-red);
+      cursor: pointer;
+      transition: 0.15s;
+      font-size: 1.1rem;
+    }
+
+    .rating-btn:hover {
+      background: var(--japan-red);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* card management table */
+    .management-section {
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 2rem;
+      border: 2px solid var(--card-border);
+      margin: 2rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h3 {
+      font-size: 1.8rem;
+      color: var(--japan-red);
+      font-weight: 500;
+    }
+
+    .add-btn {
+      background: var(--japan-red);
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 0.7rem 2rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .card-table th {
+      text-align: left;
+      padding: 1rem 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 2px solid var(--card-border);
+    }
+
+    .card-table td {
+      padding: 1rem 0.5rem;
+      border-bottom: 1px dashed var(--card-border);
+    }
+
+    .card-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      background: var(--japan-red-light);
+      color: var(--japan-red);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .action-icon {
+      color: var(--japan-red);
+      margin: 0 0.4rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: 0.1s;
+    }
+
+    .action-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* footer */
+    .footer-compact {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 2rem 2rem 1.5rem;
+      border-top: 5px solid var(--japan-red);
+      text-align: center;
+      font-size: 0.95rem;
+      margin-top: auto;
+    }
+
+    .footer-compact a {
+      color: var(--footer-link);
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+
+    .footer-compact a:hover {
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .navbar { flex-direction: column; padding: 1rem; }
+      .nav-links { gap: 1rem; justify-content: center; }
+      .card-carousel { flex-direction: column; }
+      .carousel-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-circle"></i> 夢の日本
+      <span style="font-size: 0.9rem; margin-left: 5px; color: var(--japan-red);">Dream of Nihon</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="pages/lesson-explorer.html">Lessons</a>
+      <a href="pages/hiragana.html">Hiragana</a>
+      <a href="pages/katakana.html">Katakana</a>
+      <a href="pages/kanji.html">Kanji</a>
+      <a href="pages/flashcards.html" style="border-bottom-color: var(--japan-red);">Flashcards</a>
+      <!-- theme toggle -->
+      <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun" id="themeIconSun"></i>
+        <i class="fas fa-moon" id="themeIconMoon" style="display: none;"></i>
+        <span id="themeText">Light</span>
+      </div>
+      <a href="pages/login.html" style="border:1.5px solid var(--japan-red); padding:0.4rem 1.2rem; border-radius:40px;">ログイン</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i>
+      <a href="pages/lesson-explorer.html">Lessons</a> <i class="fas fa-chevron-right"></i>
+      <span style="color: var(--text-secondary);">単語帳 · 暗記管理</span>
+    </div>
+
+    <!-- header -->
+    <div class="page-header">
+      <span class="title-badge"><i class="fas fa-layer-group"></i> フラッシュカード</span>
+      <h1>Flashcard <span>management</span></h1>
+      <p class="header-sub" style="color: var(--text-secondary); max-width: 600px;">Review, organize, and master your decks. 暗記は勝利への鍵。</p>
+    </div>
+
+    <!-- deck filter -->
+    <div class="deck-filter">
+      <div class="deck-tabs">
+        <button class="deck-btn active" data-deck="all">All decks</button>
+        <button class="deck-btn" data-deck="hiragana">Hiragana</button>
+        <button class="deck-btn" data-deck="katakana">Katakana</button>
+        <button class="deck-btn" data-deck="kanji-n5">Kanji N5</button>
+        <button class="deck-btn" data-deck="vocab">Vocabulary</button>
+      </div>
+      <div class="stats-badge"><i class="fas fa-layer-group" style="color: var(--japan-red);"></i> 42 cards · 12 due</div>
+    </div>
+
+    <!-- flashcard carousel / review area -->
+    <div class="card-carousel">
+      <div class="carousel-arrow" id="prevCard"><i class="fas fa-chevron-left"></i></div>
+      <div class="flashcard-container" id="flashcardContainer">
+        <div class="flashcard" id="currentFlashcard">
+          <div class="flashcard-front">
+            <div class="card-character">あ</div>
+            <div class="card-reading">a</div>
+            <div class="card-hint">click to flip · ひらがな</div>
+          </div>
+          <div class="flashcard-back">
+            <div class="card-meaning">Hiragana 'a'</div>
+            <div class="card-reading">あ sound</div>
+            <div class="card-hint">mnemonic: 'ah'</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-arrow" id="nextCard"><i class="fas fa-chevron-right"></i></div>
+    </div>
+
+    <!-- confidence rating -->
+    <div class="rating-section">
+      <div class="rating-title"><i class="fas fa-brain"></i> どのくらい覚えましたか？ — confidence</div>
+      <div class="rating-buttons">
+        <button class="rating-btn" data-rating="1"><i class="fas fa-sad-tear"></i> 忘れた (1)</button>
+        <button class="rating-btn" data-rating="2"><i class="fas fa-meh"></i> 難しい (2)</button>
+        <button class="rating-btn" data-rating="3"><i class="fas fa-smile"></i> 覚えた (3)</button>
+        <button class="rating-btn" data-rating="4"><i class="fas fa-laugh"></i> 簡単 (4)</button>
+      </div>
+    </div>
+
+    <!-- card management table (editable) -->
+    <div class="management-section">
+      <div class="section-header">
+        <h3><i class="fas fa-list"></i> カード一覧 · card list</h3>
+        <button class="add-btn" id="addCardBtn"><i class="fas fa-plus"></i> 新規追加</button>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr><th>Front</th><th>Reading</th><th>Meaning</th><th>Deck</th><th>Due</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="cardTableBody">
+          <tr><td>あ</td><td>a</td><td>Hiragana a</td><td><span class="badge">hiragana</span></td><td>today</td><td><i class="fas fa-edit action-icon"></i> <i class="fas fa-trash action-icon"></i></td></tr>
+          <tr><td>い</td><td>i</td><td>Hiragana i</td><td><span class="badge">hiragana</span></td><td>tomorrow</td><td><i class="fas fa-edit action-icon"></i> <i class="fas fa-trash action-icon"></i></td></tr>
+          <tr><td>ア</td><td>a</td><td>Katakana a</td><td><span class="badge">katakana</span></td><td>today</td><td><i class="fas fa-edit action-icon"></i> <i class="fas fa-trash action-icon"></i></td></tr>
+          <tr><td>日</td><td>にち / ひ</td><td>sun, day</td><td><span class="badge">kanji-n5</span></td><td>2025-04-01</td><td><i class="fas fa-edit action-icon"></i> <i class="fas fa-trash action-icon"></i></td></tr>
+          <tr><td>月</td><td>げつ / つき</td><td>moon</td><td><span class="badge">kanji-n5</span></td><td>2025-03-30</td><td><i class="fas fa-edit action-icon"></i> <i class="fas fa-trash action-icon"></i></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer class="footer-compact">
+    <div>
+      <span><a href="pages/admin/dashboard.html">管理</a> · <a href="pages/login.html">ログイン</a> · <a href="pages/register.html">新規登録</a></span>
+      <p style="margin-top: 0.8rem;">© 夢の日本 · Flashcard Management · SRS</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // ----- DARK MODE TOGGLE (same as other pages) -----
+      const themeToggle = document.getElementById('themeToggle');
+      const iconSun = document.getElementById('themeIconSun');
+      const iconMoon = document.getElementById('themeIconMoon');
+      const themeText = document.getElementById('themeText');
+      
+      const savedTheme = localStorage.getItem('dreamNihonTheme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'inline-block';
+        themeText.textContent = 'Dark';
+      } else {
+        iconSun.style.display = 'inline-block';
+        iconMoon.style.display = 'none';
+        themeText.textContent = 'Light';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+          document.body.classList.remove('dark-mode');
+          iconSun.style.display = 'inline-block';
+          iconMoon.style.display = 'none';
+          themeText.textContent = 'Light';
+          localStorage.setItem('dreamNihonTheme', 'light');
+        } else {
+          document.body.classList.add('dark-mode');
+          iconSun.style.display = 'none';
+          iconMoon.style.display = 'inline-block';
+          themeText.textContent = 'Dark';
+          localStorage.setItem('dreamNihonTheme', 'dark');
+        }
+      });
+
+      // ----- FLASHCARD INTERACTIVITY (simple demo) -----
+      const flashcard = document.getElementById('currentFlashcard');
+      const container = document.getElementById('flashcardContainer');
+      
+      // Flip on click
+      flashcard.addEventListener('click', (e) => {
+        // avoid flipping when clicking on arrows/buttons inside? but fine.
+        flashcard.classList.toggle('flipped');
+      });
+
+      // Simple card data array (mock)
+      const cards = [
+        { front: 'あ', reading: 'a', meaning: 'Hiragana a', deck: 'hiragana', hint: 'ah' },
+        { front: 'い', reading: 'i', meaning: 'Hiragana i', deck: 'hiragana', hint: 'ee' },
+        { front: 'う', reading: 'u', meaning: 'Hiragana u', deck: 'hiragana', hint: 'oo' },
+        { front: 'え', reading: 'e', meaning: 'Hiragana e', deck: 'hiragana', hint: 'eh' },
+        { front: 'お', reading: 'o', meaning: 'Hiragana o', deck: 'hiragana', hint: 'oh' },
+        { front: 'ア', reading: 'a', meaning: 'Katakana a', deck: 'katakana', hint: 'a' },
+        { front: '日', reading: 'にち・ひ', meaning: 'sun, day', deck: 'kanji-n5', hint: 'radical 日' }
+      ];
+      let currentIndex = 0;
+
+      function updateCard(index) {
+        const card = cards[index];
+        if (!card) return;
+        const frontDiv = flashcard.querySelector('.flashcard-front');
+        const backDiv = flashcard.querySelector('.flashcard-back');
+        frontDiv.innerHTML = `
+          <div class="card-character">${card.front}</div>
+          <div class="card-reading">${card.reading}</div>
+          <div class="card-hint">click to flip · ${card.deck}</div>
+        `;
+        backDiv.innerHTML = `
+          <div class="card-meaning">${card.meaning}</div>
+          <div class="card-reading">${card.reading}</div>
+          <div class="card-hint">${card.hint || 'mnemonic'}</div>
+        `;
+        // reset flip state
+        flashcard.classList.remove('flipped');
+      }
+
+      document.getElementById('prevCard').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCard(currentIndex);
+      });
+
+      document.getElementById('nextCard').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCard(currentIndex);
+      });
+
+      // rating buttons (demo toast)
+      const ratingBtns = document.querySelectorAll('.rating-btn');
+      ratingBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const rating = btn.dataset.rating;
+          showToast(`⭐ Confidence recorded: ${rating} · SRS updated (demo)`);
+          // Optionally move to next card
+          currentIndex = (currentIndex + 1) % cards.length;
+          updateCard(currentIndex);
+        });
+      });
+
+      // deck filter (active toggle)
+      const deckBtns = document.querySelectorAll('.deck-btn');
+      deckBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          deckBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          showToast(`Filter: ${btn.textContent} (demo)`);
+        });
+      });
+
+      // add card button
+      document.getElementById('addCardBtn').addEventListener('click', () => {
+        showToast('➕ 新規カード追加ダイアログ (demo)');
+      });
+
+      // table action icons (demo)
+      document.querySelectorAll('.action-icon').forEach(icon => {
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (icon.classList.contains('fa-edit')) showToast('✏️ 編集モック');
+          else if (icon.classList.contains('fa-trash')) showToast('🗑️ 削除モック (実際には削除しません)');
+        });
+      });
+
+      // toast helper
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '30px';
+        toast.style.right = '30px';
+        toast.style.backgroundColor = 'var(--toast-bg)';
+        toast.style.color = 'white';
+        toast.style.padding = '14px 26px';
+        toast.style.borderRadius = '50px';
+        toast.style.boxShadow = '0 12px 24px rgba(0,0,0,0.4)';
+        toast.style.zIndex = '999';
+        toast.style.fontWeight = '500';
+        toast.style.border = '2px solid white';
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        toast.innerHTML = '<i class="fas fa-circle-check" style="margin-right: 8px;"></i>' + message;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '1'; }, 20);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 2000);
+      }
+
+      // welcome toast
+      setTimeout(() => {
+        showToast('📇 単語帳マネージャー · 暗記を始めよう');
+      }, 600);
+    })();
+  </script>
+</body>
+</html>

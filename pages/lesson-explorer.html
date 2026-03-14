@@ -7,7 +7,7 @@
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ----- consistent red/white aesthetic (homepage / login / register) ----- */
+    /* ----- consistent red/white aesthetic with DARK MODE support ----- */
     * {
       margin: 0;
       padding: 0;
@@ -15,36 +15,81 @@
     }
 
     body {
-      background: #fcfaf9;
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      color: #1e1b1a;
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       opacity: 0;
       animation: appear 0.5s ease forwards;
+      transition: background-color 0.3s ease, color 0.2s ease;
     }
 
     @keyframes appear { to { opacity: 1; } }
 
+    /* Light theme (default) */
     :root {
       --japan-red: #b22222;
       --japan-red-light: #fae6e6;
       --paper-white: #ffffff;
       --charcoal: #2a2523;
+      --bg-body: #fcfaf9;
+      --text-primary: #1e1b1a;
+      --text-secondary: #4e413b;
+      --card-bg: #ffffff;
+      --card-border: #fcd7d7;
+      --filter-bg: #ffffff;
+      --filter-border: #fcd7d7;
+      --input-bg: #fef8f7;
+      --input-border: #f0d3d3;
+      --jlpt-section-bg: #ffffff;
+      --footer-bg: #1f1613;
+      --footer-text: #ead7cf;
+      --footer-link: #ffbaba;
+      --shadow-color: rgba(178, 34, 34, 0.15);
+      --toast-bg: #b22222;
+      --icon-filter: none;
     }
 
-    /* --- navbar (identical) --- */
+    /* Dark theme */
+    body.dark-mode {
+      --japan-red: #e05a5a;        /* brighter red for dark bg */
+      --japan-red-light: #3f2a2a;
+      --paper-white: #2a2a2a;
+      --charcoal: #e0d6d2;
+      --bg-body: #1a1a1a;
+      --text-primary: #f0e6e2;
+      --text-secondary: #cbb5ab;
+      --card-bg: #2d2d2d;
+      --card-border: #5f4444;
+      --filter-bg: #2d2d2d;
+      --filter-border: #5f4444;
+      --input-bg: #3a3a3a;
+      --input-border: #774e4e;
+      --jlpt-section-bg: #2d2d2d;
+      --footer-bg: #0f0f0f;
+      --footer-text: #b3a39b;
+      --footer-link: #d88d8d;
+      --shadow-color: rgba(224, 90, 90, 0.25);
+      --toast-bg: #c44a4a;
+    }
+
+    body {
+      background: var(--bg-body);
+      color: var(--text-primary);
+    }
+
+    /* --- navbar --- */
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2.5rem;
-      background: var(--paper-white);
+      background: var(--card-bg);
       border-bottom: 2px solid var(--japan-red);
-      box-shadow: 0 4px 16px -10px rgba(178, 34, 34, 0.15);
+      box-shadow: 0 4px 16px -10px var(--shadow-color);
       flex-wrap: wrap;
+      transition: background 0.3s;
     }
 
     .logo {
@@ -71,7 +116,7 @@
 
     .nav-links a {
       text-decoration: none;
-      color: var(--charcoal);
+      color: var(--text-primary);
       font-weight: 500;
       transition: 0.2s;
       border-bottom: 2px solid transparent;
@@ -83,7 +128,31 @@
       color: var(--japan-red);
     }
 
-    /* --- page container --- */
+    /* dark mode toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1.5px solid var(--japan-red);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: var(--japan-red);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--japan-red-light);
+      transform: scale(1.02);
+    }
+
+    .theme-toggle i {
+      font-size: 1.1rem;
+    }
+
+    /* --- container --- */
     .container {
       max-width: 1280px;
       margin: 2rem auto 3rem;
@@ -95,10 +164,6 @@
     /* page header */
     .page-header {
       margin-bottom: 3rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .title-badge {
@@ -109,13 +174,13 @@
       display: inline-block;
       font-size: 0.9rem;
       font-weight: 600;
-      border: 1px solid #f3c3c3;
+      border: 1px solid var(--card-border);
     }
 
     .page-header h1 {
       font-size: 3.2rem;
       font-weight: 550;
-      color: #1e1613;
+      color: var(--text-primary);
       margin: 0.5rem 0 0.2rem;
       line-height: 1.2;
     }
@@ -126,7 +191,7 @@
     }
 
     .header-sub {
-      color: #4e413b;
+      color: var(--text-secondary);
       font-size: 1.15rem;
       max-width: 600px;
       border-left: 4px solid var(--japan-red);
@@ -135,15 +200,15 @@
 
     /* filter/search bar */
     .filter-section {
-      background: white;
+      background: var(--filter-bg);
       border-radius: 60px;
       padding: 0.8rem 1.2rem 0.8rem 2rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 1rem;
-      border: 2px solid #fcd7d7;
-      box-shadow: 0 8px 20px -14px #b55a3a;
+      border: 2px solid var(--filter-border);
+      box-shadow: 0 8px 20px -14px var(--japan-red);
       margin: 2rem 0 2.5rem;
       justify-content: space-between;
     }
@@ -160,7 +225,7 @@
       padding: 0.5rem 1.4rem;
       border-radius: 40px;
       font-weight: 500;
-      color: #4d3b34;
+      color: var(--text-secondary);
       cursor: pointer;
       transition: 0.15s;
       font-size: 1rem;
@@ -184,8 +249,8 @@
     .search-wrapper {
       display: flex;
       align-items: center;
-      background: #fef8f7;
-      border: 1.5px solid #f0d3d3;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
       border-radius: 60px;
       padding: 0.3rem 0.3rem 0.3rem 1.2rem;
       min-width: 240px;
@@ -202,6 +267,12 @@
       font-size: 1rem;
       width: 100%;
       outline: none;
+      color: var(--text-primary);
+    }
+
+    .search-wrapper input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.7;
     }
 
     .search-wrapper button {
@@ -214,7 +285,7 @@
       cursor: pointer;
     }
 
-    /* lesson grid — 3 or 4 cards, similar to homepage but richer */
+    /* lesson grid */
     .lesson-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -223,11 +294,11 @@
     }
 
     .lesson-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 32px;
       padding: 2rem 1.5rem 1.8rem;
-      box-shadow: 0 16px 28px -16px rgba(120, 40, 40, 0.2);
-      border: 1.5px solid #fcd7d7;
+      box-shadow: 0 16px 28px -16px var(--shadow-color);
+      border: 1.5px solid var(--card-border);
       transition: all 0.2s;
       cursor: pointer;
       text-align: center;
@@ -238,7 +309,7 @@
     .lesson-card:hover {
       border-color: var(--japan-red);
       transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 22px 34px -14px #b22222;
+      box-shadow: 0 22px 34px -14px var(--japan-red);
     }
 
     .card-icon {
@@ -257,7 +328,7 @@
     .lesson-card h3 {
       font-size: 1.8rem;
       font-weight: 500;
-      color: #251e1a;
+      color: var(--text-primary);
       margin-bottom: 0.2rem;
     }
 
@@ -268,7 +339,7 @@
     }
 
     .lesson-desc {
-      color: #4e413b;
+      color: var(--text-secondary);
       font-size: 0.95rem;
       margin: 0.5rem 0 1rem;
     }
@@ -279,27 +350,31 @@
       gap: 1.2rem;
       margin-top: auto;
       padding-top: 1rem;
-      color: #7a5e53;
+      color: var(--text-secondary);
       font-size: 0.9rem;
-      border-top: 1px dashed #f0caca;
+      border-top: 1px dashed var(--card-border);
     }
 
     .meta-row i {
       color: var(--japan-red);
     }
 
-    /* level tags */
-    .level-beginner { color: #2b7a4b; }
-    .level-intermediate { color: #ca7200; }
-    .level-advanced { color: #b22222; }
+    /* level tags (keep readability) */
+    .level-beginner { color: #58b787; }
+    .level-intermediate { color: #e5943c; }
+    .level-advanced { color: var(--japan-red); }
 
-    /* featured / jlpt section */
+    /* jlpt section */
     .jlpt-section {
-      background: white;
+      background: var(--jlpt-section-bg);
       border-radius: 48px;
       padding: 2.5rem;
       margin: 4rem 0;
-      border: 2px solid #fcd7d7;
+      border: 2px solid var(--card-border);
+    }
+
+    .jlpt-section h2 {
+      color: var(--text-primary);
     }
 
     .jlpt-grid {
@@ -311,7 +386,7 @@
     }
 
     .jlpt-item {
-      background: #fff4f2;
+      background: var(--japan-red-light);
       border-radius: 100px;
       padding: 0.8rem 2.2rem;
       border: 1.5px solid var(--japan-red);
@@ -319,7 +394,7 @@
       font-size: 1.3rem;
       color: var(--japan-red);
       transition: 0.15s;
-      box-shadow: 0 4px 8px #facfcf;
+      box-shadow: 0 4px 8px var(--shadow-color);
     }
 
     .jlpt-item:hover {
@@ -330,8 +405,8 @@
 
     /* footer */
     .footer-compact {
-      background: #1f1613;
-      color: #ead7cf;
+      background: var(--footer-bg);
+      color: var(--footer-text);
       padding: 2rem 2rem 1.5rem;
       border-top: 5px solid var(--japan-red);
       text-align: center;
@@ -340,7 +415,7 @@
     }
 
     .footer-compact a {
-      color: #ffbaba;
+      color: var(--footer-link);
       text-decoration: none;
       margin: 0 0.8rem;
     }
@@ -351,17 +426,17 @@
 
     @media (max-width: 700px) {
       .navbar { flex-direction: column; padding: 1rem; }
-      .nav-links { gap: 1.2rem; justify-content: center; }
+      .nav-links { gap: 1rem; justify-content: center; }
       .filter-section { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
 <body>
-  <!-- navbar (same as homepage) -->
+  <!-- navbar with theme toggle -->
   <nav class="navbar">
     <div class="logo">
       <i class="fas fa-circle"></i> 夢の日本
-      <span style="font-size: 0.9rem; margin-left: 5px; color:#b55a3a;">Dream of Nihon</span>
+      <span style="font-size: 0.9rem; margin-left: 5px; color: var(--japan-red);">Dream of Nihon</span>
     </div>
     <div class="nav-links">
       <a href="index.html">Home</a>
@@ -369,7 +444,13 @@
       <a href="pages/hiragana.html">Kana</a>
       <a href="pages/kanji.html">Kanji</a>
       <a href="pages/flashcards.html">Study</a>
-      <a href="pages/login.html" class="btn-outline" style="border:1.5px solid var(--japan-red); padding:0.4rem 1.2rem; border-radius:40px;">ログイン</a>
+      <!-- dark mode toggle button -->
+      <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun" id="themeIconSun"></i>
+        <i class="fas fa-moon" id="themeIconMoon" style="display: none;"></i>
+        <span id="themeText">Light</span>
+      </div>
+      <a href="pages/login.html" style="border:1.5px solid var(--japan-red); padding:0.4rem 1.2rem; border-radius:40px;">ログイン</a>
     </div>
   </nav>
 
@@ -383,7 +464,7 @@
       </div>
     </div>
 
-    <!-- filter bar (interactive but static demo) -->
+    <!-- filter bar -->
     <div class="filter-section">
       <div class="filter-tabs">
         <button class="filter-btn active"><i class="fas fa-seedling"></i> All</button>
@@ -400,7 +481,7 @@
       </div>
     </div>
 
-    <!-- dynamic grid (like homepage cards but extended) -->
+    <!-- lesson grid (same content) -->
     <div class="lesson-grid">
       <!-- card 1 - hiragana -->
       <div class="lesson-card" onclick="location.href='pages/hiragana.html';">
@@ -494,13 +575,11 @@
         <span class="jlpt-item">N2</span>
         <span class="jlpt-item">N1</span>
       </div>
-      <p style="margin-top:1.8rem; color:#4a3730;"><i class="fas fa-circle-info" style="color:var(--japan-red);"></i> 完全なカリキュラム — 文法・読解・聴解</p>
+      <p style="margin-top:1.8rem; color:var(--text-secondary);"><i class="fas fa-circle-info" style="color:var(--japan-red);"></i> 完全なカリキュラム — 文法・読解・聴解</p>
     </div>
-
-    <!-- note: demo toast similar to home/login, but showing explorer -->
   </main>
 
-  <!-- footer (compact) -->
+  <!-- footer -->
   <footer class="footer-compact">
     <div>
       <span><a href="pages/admin/dashboard.html">管理</a> · <a href="pages/login.html">ログイン</a> · <a href="pages/register.html">新規登録</a></span>
@@ -508,24 +587,62 @@
     </div>
   </footer>
 
-  <!-- subtle toast (optional) to signal page loaded -->
+  <!-- dark mode toggle script -->
   <script>
     (function() {
+      const themeToggle = document.getElementById('themeToggle');
+      const iconSun = document.getElementById('themeIconSun');
+      const iconMoon = document.getElementById('themeIconMoon');
+      const themeText = document.getElementById('themeText');
+      
+      // Check for saved preference
+      const savedTheme = localStorage.getItem('dreamNihonTheme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'inline-block';
+        themeText.textContent = 'Dark';
+      } else {
+        // light is default
+        iconSun.style.display = 'inline-block';
+        iconMoon.style.display = 'none';
+        themeText.textContent = 'Light';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+          // switch to light
+          document.body.classList.remove('dark-mode');
+          iconSun.style.display = 'inline-block';
+          iconMoon.style.display = 'none';
+          themeText.textContent = 'Light';
+          localStorage.setItem('dreamNihonTheme', 'light');
+        } else {
+          // switch to dark
+          document.body.classList.add('dark-mode');
+          iconSun.style.display = 'none';
+          iconMoon.style.display = 'inline-block';
+          themeText.textContent = 'Dark';
+          localStorage.setItem('dreamNihonTheme', 'dark');
+        }
+      });
+
+      // toast (adjusted for dark mode)
       const toast = document.createElement('div');
       toast.style.position = 'fixed';
       toast.style.bottom = '30px';
       toast.style.right = '30px';
-      toast.style.backgroundColor = '#b22222';
+      toast.style.backgroundColor = 'var(--toast-bg)';
       toast.style.color = 'white';
       toast.style.padding = '12px 24px';
       toast.style.borderRadius = '50px';
-      toast.style.boxShadow = '0 12px 24px rgba(178,34,34,0.4)';
+      toast.style.boxShadow = '0 12px 24px rgba(0,0,0,0.4)';
       toast.style.zIndex = '999';
       toast.style.fontWeight = '500';
       toast.style.border = '2px solid white';
       toast.style.opacity = '0';
       toast.style.transition = 'opacity 0.4s';
-      toast.innerHTML = '<i class="fas fa-compass" style="margin-right: 8px;"></i> レッスン一覧 · 勉強を始めよう';
+      toast.innerHTML = '<i class="fas fa-compass" style="margin-right: 8px;"></i> レッスン一覧 · テーマ切替可能';
       document.body.appendChild(toast);
       setTimeout(() => { toast.style.opacity = '1'; }, 400);
       setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3000);
