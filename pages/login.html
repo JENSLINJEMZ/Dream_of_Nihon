@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>login · 夢の日本 (unbound)</title>
-  <!-- Font Awesome -->
+  <title>ログイン · 夢の日本 | Dream of Nihon</title>
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ----- brutal / unbound red & white ----- */
+    /* ----- inherit homepage aesthetics: red/white, smooth, elegant ----- */
     * {
       margin: 0;
       padding: 0;
@@ -15,497 +15,493 @@
     }
 
     body {
-      background: #fcf3ef;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #1f1a17;
+      background: #fcfaf9;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: #1e1b1a;
+      line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      animation: appear 0.5s ease forwards;
     }
+
+    @keyframes appear { to { opacity: 1; } }
 
     :root {
-      --ink: #b22222;
-      --paper: #fffbf9;
-      --shadow: #2c211c;
+      --japan-red: #b22222;
+      --japan-red-light: #fae6e6;
+      --paper-white: #ffffff;
+      --charcoal: #2a2523;
     }
 
-    /* --- navigation — floating slabs (same as home) --- */
+    /* --- navbar (compact, matching homepage) --- */
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.6rem 3rem;
-      background: var(--paper);
-      border-bottom: 4px solid var(--ink);
-      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-      box-shadow: 0 16px 24px -20px var(--ink);
+      padding: 1rem 2.5rem;
+      background: var(--paper-white);
+      border-bottom: 2px solid var(--japan-red);
+      box-shadow: 0 4px 16px -10px rgba(178, 34, 34, 0.15);
+      flex-wrap: wrap;
     }
 
     .logo {
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: var(--ink);
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: var(--japan-red);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      letter-spacing: -0.5px;
+      gap: 0.4rem;
+      letter-spacing: -0.3px;
     }
 
     .logo i {
-      font-size: 2rem;
-      transform: rotate(10deg);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.8rem;
+      font-size: 1.8rem;
+      color: var(--japan-red);
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #2b221e;
+      color: var(--charcoal);
       font-weight: 500;
-      font-size: 1.2rem;
-      border-bottom: 2px dotted transparent;
+      margin-left: 2rem;
       transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
     }
 
     .nav-links a:hover {
-      border-bottom: 2px dotted var(--ink);
-      color: var(--ink);
+      border-bottom-color: var(--japan-red);
+      color: var(--japan-red);
     }
 
-    .btn {
-      padding: 0.5rem 2rem;
-      border-radius: 0px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      border: 2px solid var(--ink);
-      background: transparent;
-      color: var(--ink);
-      transition: 0.15s;
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: var(--ink);
-      color: white;
-      border: 2px solid var(--ink);
-      box-shadow: 6px 6px 0 #3b2b26;
-    }
-
-    .btn-primary:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 10px 10px 0 #3b2b26;
-    }
-
-    .btn-outline {
-      background: transparent;
-      box-shadow: 4px 4px 0 #dbb9b9;
-    }
-
-    .btn-outline:hover {
-      background: #ffe4e4;
-      box-shadow: 6px 6px 0 var(--ink);
-    }
-
-    /* --- LOGIN PAGE SPECIFIC — split brutalist --- */
+    /* --- main login area : two column  traditional elegance --- */
     .login-container {
+      max-width: 1200px;
+      margin: 2.5rem auto 3rem;
+      padding: 0 2rem;
+      flex: 1;
       display: flex;
-      flex-wrap: wrap;
-      min-height: 80vh;
-      max-width: 1400px;
-      margin: 2rem auto;
-      background: white;
-      border: 4px solid var(--ink);
-      box-shadow: 24px 24px 0 #221b18;
+      align-items: center;
     }
 
-    /* left side — bold graphic / japan red zone */
-    .login-graphic {
-      flex: 1 1 400px;
-      background: var(--ink);
-      color: white;
-      padding: 3rem 2.5rem;
+    .login-panel {
+      display: flex;
+      background: white;
+      border-radius: 48px;
+      overflow: hidden;
+      box-shadow: 0 28px 48px -28px rgba(178, 34, 34, 0.3);
+      border: 2px solid #fcd7d7;
+      width: 100%;
+      min-height: 580px;
+    }
+
+    /* left side — japanese traditional visual (inspired by hero image) */
+    .login-illustration {
+      flex: 1 1 45%;
+      background: linear-gradient(165deg, #fff1ef 0%, #ffffff 100%);
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      border-right: 4px solid #2b1e1a;
-      clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
-      position: relative;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      border-right: 2px dashed var(--japan-red);
     }
 
-    .graphic-top h2 {
-      font-size: 4rem;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: -2px;
-    }
-
-    .graphic-top h2 i {
-      color: #ffcfcf;
-      font-size: 3.5rem;
-      margin-right: 0.5rem;
-    }
-
-    .graphic-mid {
-      margin: 3rem 0;
-    }
-
-    .giant-kanji {
-      font-size: 12rem;
-      font-weight: 800;
-      color: #ffdfdf;
-      line-height: 0.8;
-      text-shadow: 8px 8px 0 #712020;
+    .wave-svg {
+      width: 100%;
+      max-width: 280px;
       margin-bottom: 1rem;
+      opacity: 0.9;
     }
 
-    .graphic-quote {
-      font-size: 1.8rem;
+    .kanji-watermark {
+      font-size: 12rem;
+      font-weight: 400;
+      color: #b22222;
+      opacity: 0.12;
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      transform: rotate(-5deg);
+      pointer-events: none;
+      font-family: "Noto Serif JP", serif;
+    }
+
+    .traditional-text {
+      text-align: center;
+      z-index: 2;
+    }
+
+    .traditional-text h2 {
+      font-size: 2.4rem;
       font-weight: 500;
-      border-left: 8px solid white;
-      padding-left: 1.5rem;
+      color: #321f1b;
+      line-height: 1.2;
     }
 
-    .graphic-footer p {
-      font-size: 1.2rem;
-      opacity: 0.8;
+    .traditional-text h2 span {
+      color: var(--japan-red);
+      border-bottom: 3px solid var(--japan-red);
+      padding-bottom: 6px;
     }
 
-    /* right side — login form brutal */
-    .login-form-panel {
-      flex: 1 1 400px;
+    .traditional-text p {
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      color: #4d3b34;
+      background: rgba(255, 240, 240, 0.7);
+      padding: 0.7rem 1.8rem;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* right side — login form */
+    .login-form-area {
+      flex: 1 1 55%;
+      padding: 3rem 3.5rem;
       background: white;
-      padding: 4rem 3.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .form-header {
-      margin-bottom: 3rem;
-    }
-
-    .form-header h3 {
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .form-header p {
-      font-size: 1.2rem;
-      color: #4d3d35;
-      border-bottom: 3px solid var(--ink);
-      padding-bottom: 0.8rem;
+    .login-badge {
+      background: var(--japan-red-light);
+      color: var(--japan-red);
+      padding: 0.4rem 1.4rem;
+      border-radius: 40px;
       display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      border: 1px solid #f3c3c3;
+      width: fit-content;
+    }
+
+    .login-form-area h3 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #251e1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-sub {
+      color: #5d4b42;
+      margin-bottom: 2.2rem;
+      border-left: 4px solid var(--japan-red);
+      padding-left: 1rem;
     }
 
     .input-group {
-      margin-bottom: 2.2rem;
+      margin-bottom: 1.6rem;
     }
 
     .input-group label {
       display: block;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #2d221e;
+      font-weight: 500;
+      color: #2c221e;
       margin-bottom: 0.4rem;
-      letter-spacing: 0.5px;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
     }
 
     .input-wrapper {
       display: flex;
       align-items: center;
-      border: 3px solid var(--ink);
-      background: white;
-      box-shadow: 6px 6px 0 #ac8b8b;
+      background: #fef8f7;
+      border: 1.5px solid #f0d3d3;
+      border-radius: 60px;
+      padding: 0.2rem 1.2rem;
+      transition: 0.2s;
+    }
+
+    .input-wrapper:hover,
+    .input-wrapper:focus-within {
+      border-color: var(--japan-red);
+      box-shadow: 0 0 0 4px #fcd7d7;
     }
 
     .input-wrapper i {
-      width: 50px;
-      text-align: center;
-      font-size: 1.4rem;
-      color: var(--ink);
-      border-right: 3px solid var(--ink);
-      padding: 0.8rem 0;
+      color: var(--japan-red);
+      font-size: 1.1rem;
+      width: 28px;
     }
 
     .input-wrapper input {
-      flex: 1;
+      width: 100%;
+      padding: 1rem 0.8rem 1rem 0.2rem;
       border: none;
-      padding: 0.8rem 1rem;
-      font-size: 1.2rem;
       background: transparent;
-      font-weight: 500;
+      font-size: 1.05rem;
       outline: none;
     }
 
     .input-wrapper input::placeholder {
-      color: #bda69c;
-      font-style: italic;
+      color: #b7a099;
+      font-weight: 300;
     }
 
-    /* password hint row */
-    .options-row {
+    .form-options {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 1rem 0 2.5rem;
+      margin: 1rem 0 2rem;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.5rem;
     }
 
-    .checkbox-raw {
+    .remember {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 1.1rem;
-    }
-
-    .checkbox-raw input {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--ink);
-      appearance: none;
-      background: white;
+      gap: 0.4rem;
+      color: #3f332e;
       cursor: pointer;
     }
 
-    .checkbox-raw input:checked {
-      background: var(--ink);
-      box-shadow: inset 0 0 0 4px white;
+    .remember input[type="checkbox"] {
+      accent-color: var(--japan-red);
+      width: 1.1rem;
+      height: 1.1rem;
     }
 
     .forgot-link {
-      color: var(--ink);
-      font-weight: 600;
+      color: var(--japan-red);
       text-decoration: none;
-      border-bottom: 2px dotted var(--ink);
+      font-weight: 500;
+      border-bottom: 1px dashed var(--japan-red);
     }
 
     .forgot-link:hover {
-      border-bottom: 2px solid var(--ink);
+      border-bottom-style: solid;
     }
 
-    /* login button — huge */
-    .login-btn {
-      background: var(--ink);
+    .btn-login {
+      background: var(--japan-red);
       color: white;
-      border: 3px solid var(--ink);
-      font-size: 2rem;
-      font-weight: 700;
-      padding: 1rem;
+      border: none;
+      padding: 1.2rem 2rem;
+      border-radius: 60px;
+      font-size: 1.3rem;
+      font-weight: 500;
       width: 100%;
       cursor: pointer;
-      box-shadow: 12px 12px 0 #291f1b;
-      transition: 0.1s;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .login-btn:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 18px 18px 0 #291f1b;
-    }
-
-    /* social signup */
-    .social-login {
-      display: flex;
-      gap: 1rem;
-      margin: 1.5rem 0;
-      flex-wrap: wrap;
-    }
-
-    .social-btn {
-      flex: 1;
-      border: 3px solid var(--ink);
-      background: white;
-      padding: 0.8rem;
-      font-size: 1.4rem;
-      color: var(--ink);
-      cursor: pointer;
-      box-shadow: 5px 5px 0 #c9a5a5;
-      transition: 0.1s;
+      transition: 0.2s;
+      box-shadow: 0 8px 18px rgba(178, 34, 34, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-login:hover {
+      background: #8b1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 24px -8px #8b1a1a;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .social-btn {
+      background: white;
+      border: 1.5px solid #f0d3d3;
+      border-radius: 50px;
+      padding: 0.7rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      cursor: pointer;
+      transition: 0.15s;
+      text-decoration: none;
+    }
+
+    .social-btn i {
+      color: var(--japan-red);
+      font-size: 1.2rem;
     }
 
     .social-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--ink);
+      border-color: var(--japan-red);
+      background: var(--japan-red-light);
     }
 
-    .register-cta {
+    .register-prompt {
       margin-top: 2rem;
-      font-size: 1.2rem;
-      border-top: 3px solid var(--ink);
-      padding-top: 1.5rem;
+      text-align: center;
+      color: #4e413b;
     }
 
-    .register-cta a {
-      color: var(--ink);
-      font-weight: 700;
+    .register-prompt a {
+      color: var(--japan-red);
+      font-weight: 600;
       text-decoration: none;
-      border-bottom: 3px solid var(--ink);
+      border-bottom: 2px solid var(--japan-red);
     }
 
-    .register-cta a:hover {
-      background: var(--ink);
+    .register-prompt a:hover {
+      opacity: 0.8;
+    }
+
+    /* footer (compact) */
+    .footer-compact {
+      background: #1f1613;
+      color: #ead7cf;
+      padding: 2rem 2rem 1.5rem;
+      border-top: 5px solid var(--japan-red);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .footer-compact a {
+      color: #ffbaba;
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+
+    .footer-compact a:hover {
       color: white;
-      padding: 0 0.3rem;
     }
-
-    /* footer (simplified, matches aesthetic) */
-    .footer {
-      background: #231b18;
-      color: #efdbd1;
-      padding: 2rem 2rem;
-      border-top: 6px solid var(--ink);
-      clip-path: polygon(0 0, 100% 2%, 100% 100%, 0% 100%);
-      margin-top: 3rem;
-    }
-
-    .footer a { color: #ffb2b2; }
 
     @media (max-width: 800px) {
-      .navbar { flex-direction: column; padding: 1rem; }
-      .nav-links { gap: 1.2rem; flex-wrap: wrap; }
-      .login-graphic { clip-path: none; border-right: none; border-bottom: 4px solid #2b1e1a; }
+      .login-panel { flex-direction: column; }
+      .login-illustration { border-right: none; border-bottom: 2px dashed var(--japan-red); padding: 3rem 1rem; }
+      .navbar { flex-direction: column; gap: 0.5rem; }
+      .nav-links a { margin: 0 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- navigation (same raw style) -->
+  <!-- same navbar as home (trimmed) -->
   <nav class="navbar">
     <div class="logo">
       <i class="fas fa-circle"></i> 夢の日本
-      <span style="font-size: 0.9rem; font-weight:400; margin-left:10px; color:#b55a3a;">unbound</span>
+      <span style="font-size: 0.9rem; margin-left: 5px; color:#b55a3a;">Dream of Nihon</span>
     </div>
     <div class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="lesson-explorer.html">Lessons</a>
-      <a href="hiragana.html">Kana</a>
-      <a href="kanji.html">Kanji</a>
-      <a href="flashcards.html">Study</a>
-      <a href="progress-analytics.html">Progress</a>
-      <a href="login.html" class="btn btn-outline">ログイン</a>
-      <a href="register.html" class="btn btn-primary">Get started</a>
+      <a href="index.html">Home</a>
+      <a href="pages/lesson-explorer.html">Lessons</a>
+      <a href="pages/hiragana.html">Kana</a>
+      <a href="pages/kanji.html">Kanji</a>
+      <a href="pages/flashcards.html">Study</a>
+      <!-- login / register not duplicated -->
     </div>
   </nav>
 
-  <!-- main login area — split brutal -->
+  <!-- login page main -->
   <div class="login-container">
-    <!-- left side: big red graphic -->
-    <div class="login-graphic">
-      <div class="graphic-top">
-        <h2><i class="fas fa-dragon"></i> ようこそ</h2>
-        <div style="font-size:1.8rem; font-weight:300;">welcome back · おかえり</div>
-      </div>
-      <div class="graphic-mid">
-        <div class="giant-kanji">ログ</div>
-        <div class="giant-kanji" style="font-size:10rem; text-align:right;">イン</div>
-        <div class="graphic-quote">
-          夢に向かって
-          <span style="display:block; font-size:1.2rem;">toward your dream</span>
+    <div class="login-panel">
+      <!-- left: traditional japanese art reference (like hero) -->
+      <div class="login-illustration">
+        <div class="kanji-watermark">拝</div>
+        <!-- simple wave / torii gate inspired graphic (font awesome / ascii art) -->
+        <div class="wave-svg">
+          <i class="fas fa-torii-gate" style="font-size: 5rem; color: var(--japan-red); opacity: 0.5; margin-bottom: 1rem;"></i>
+          <svg viewBox="0 0 200 100" style="filter: drop-shadow(0 4px 6px #f0bbbb);">
+            <path d="M0,50 Q30,30 60,50 T120,50 T180,40" stroke="var(--japan-red)" stroke-width="3" fill="none" stroke-dasharray="6 6" />
+            <circle cx="50" cy="60" r="6" fill="var(--japan-red)" opacity="0.7" />
+            <circle cx="140" cy="55" r="6" fill="var(--japan-red)" opacity="0.7" />
+          </svg>
         </div>
-      </div>
-      <div class="graphic-footer">
-        <p><i class="fas fa-circle" style="font-size:0.8rem;"></i>  Japanese learning · 日本語</p>
-      </div>
-    </div>
-
-    <!-- right side: login form raw -->
-    <div class="login-form-panel">
-      <div class="form-header">
-        <h3>LOGIN</h3>
-        <p>アカウントにログイン</p>
-      </div>
-
-      <!-- email field -->
-      <div class="input-group">
-        <label>メールアドレス / email</label>
-        <div class="input-wrapper">
-          <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="your@email.com" value="yuki@dream.jp">
+        <div class="traditional-text">
+          <h2> <span>ようこそ</span> </h2>
+          <p> <i class="fas fa-sakura" style="color: var(--japan-red);"></i> ログインして旅を続ける</p>
+        </div>
+        <!-- small red stamp -->
+        <div style="margin-top: 2rem; background: white; padding: 0.5rem 1.5rem; border-radius: 30px; border: 2px solid var(--japan-red); font-weight: 500; color: var(--japan-red); box-shadow: 0 4px 8px #facfcf;">
+          稽古 · 継続
         </div>
       </div>
 
-      <!-- password field -->
-      <div class="input-group">
-        <label>パスワード / password</label>
-        <div class="input-wrapper">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="••••••••" value="samurai123">
+      <!-- right: login form (consistent with minimal red/white) -->
+      <div class="login-form-area">
+        <span class="login-badge"><i class="fas fa-chevron-circle-right"></i> 会員ログイン</span>
+        <h3>おかえりなさい</h3>
+        <div class="login-sub"> — welcome back. enter your details</div>
+
+        <form onsubmit="event.preventDefault(); showToast();">
+          <!-- email -->
+          <div class="input-group">
+            <label>Email or ユーザー名</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="your@email.com" value="demo@nihon.jp" required>
+            </div>
+          </div>
+          <!-- password -->
+          <div class="input-group">
+            <label>Password パスワード</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="••••••••" value="dream123" required>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember">
+              <input type="checkbox" checked>  <span>次回自動ログイン</span>
+            </label>
+            <a href="#" class="forgot-link">パスワード忘れた？</a>
+          </div>
+
+          <button type="submit" class="btn-login"><i class="fas fa-circle-chevron-right"></i> ログイン · Sign in</button>
+        </form>
+
+        <!-- social login -->
+        <div class="social-login">
+          <div class="social-btn"><i class="fab fa-google"></i> Google</div>
+          <div class="social-btn"><i class="fab fa-github"></i> GitHub</div>
         </div>
-      </div>
 
-      <!-- options row -->
-      <div class="options-row">
-        <label class="checkbox-raw">
-          <input type="checkbox" checked> ログインしたままにする
-        </label>
-        <a href="#" class="forgot-link">パスワードを忘れた？</a>
-      </div>
-
-      <!-- massive login button -->
-      <button class="login-btn"><i class="fas fa-sign-in-alt" style="margin-right:15px;"></i> ログイン</button>
-
-      <!-- social login -->
-      <div class="social-login">
-        <div class="social-btn"><i class="fab fa-google"></i> Google</div>
-        <div class="social-btn"><i class="fab fa-apple"></i> Apple</div>
-        <div class="social-btn"><i class="fab fa-github"></i> GitHub</div>
-      </div>
-
-      <!-- register link -->
-      <div class="register-cta">
-        アカウントをお持ちでないですか？ <a href="register.html">新規登録 <i class="fas fa-arrow-right"></i></a>
-      </div>
-
-      <!-- demo hint (raw style) -->
-      <div style="margin-top: 1.8rem; border: 2px dashed var(--ink); padding:0.8rem; background:#fff2f2;">
-        <p><i class="fas fa-flask"></i> demo: any credentials work (prototype)</p>
+        <div class="register-prompt">
+          <i class="fas fa-seedling" style="color: var(--japan-red);"></i> 初めてですか / first time? <a href="pages/register.html">アカウント作成 →</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- footer simplified -->
-  <footer class="footer">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width:1400px; margin:0 auto; padding:0 2rem;">
-      <div><h4 style="font-size:2rem; color:#ffbaba;">夢の日本</h4><p>unbound · 和のデザイン</p></div>
-      <div><h5>Explore</h5><p><a href="lesson-explorer.html">lessons</a><br><a href="kanji.html">kanji</a></p></div>
-      <div><h5>Account</h5><p><a href="login.html">login</a><br><a href="register.html">register</a></p></div>
+  <!-- mini footer (homepage style) -->
+  <footer class="footer-compact">
+    <div>
+      <span><a href="pages/admin/dashboard.html">管理者</a> · <a href="pages/register.html">新規登録</a> · <a href="index.html">ホーム</a></span>
+      <p style="margin-top: 0.8rem;">© 夢の日本 · Dream of Nihon · 和の心</p>
     </div>
   </footer>
 
-  <!-- tiny script to simulate button feedback (unbound style) -->
+  <!-- subtle toast (same style as home) -->
   <script>
-    (function() {
-      const loginBtn = document.querySelector('.login-btn');
-      if (loginBtn) {
-        loginBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          // just a raw visual feedback: redirect to home after "login"
-          window.location.href = 'home.html';
-        });
-      }
-
-      // social buttons demo
-      document.querySelectorAll('.social-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          window.location.href = 'home.html';
-        });
-      });
-    })();
+    function showToast() {
+      const toast = document.createElement('div');
+      toast.style.position = 'fixed';
+      toast.style.bottom = '30px';
+      toast.style.right = '30px';
+      toast.style.backgroundColor = '#b22222';
+      toast.style.color = 'white';
+      toast.style.padding = '14px 26px';
+      toast.style.borderRadius = '50px';
+      toast.style.boxShadow = '0 12px 24px rgba(178,34,34,0.4)';
+      toast.style.zIndex = '999';
+      toast.style.fontWeight = '500';
+      toast.style.border = '2px solid white';
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.4s';
+      toast.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 10px;"></i> ログインしました (デモ) · おかえり';
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '1'; }, 30);
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3000);
+    }
+    // optional – prefilled demo info hint
   </script>
+  <!-- small note: all pages structure consistent with home's "pages/" links, but login page itself is pages/login.html (flat) -->
 </body>
 </html>
